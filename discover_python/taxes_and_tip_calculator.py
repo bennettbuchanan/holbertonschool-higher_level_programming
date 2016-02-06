@@ -27,4 +27,4 @@ price_after_tip = price_after_taxes * tip_percentage
 # Add the price with taxes and the tip cost to find the total cost
 total = price_after_tip + price_after_taxes
 # Print the total cost to the output for the user
-print "The price you need to pay is: $%r." % total
+print "The price you need to pay is: $%.6f." % total
