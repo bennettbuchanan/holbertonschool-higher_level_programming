@@ -1,4 +1,4 @@
-'''Program written by Bennett Buchanana for Holberton School. This program asks the user for the price of a meal, the sales tax in percentage and the would like to tip they would like to make in percentage. It then prints the total cost of the meal adding all of these variables.'''
+'''Program written by Bennett Buchanan for Holberton School. This program asks the user for the price of a meal, the sales tax in percentage and the would like to tip they would like to make in percentage. It then prints the total cost of the meal adding all of these variables.'''
 
 # Print the welcome message to output
 print "Welcome to the taxes and tip calculator!"
