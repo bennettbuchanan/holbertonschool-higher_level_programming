@@ -11,9 +11,16 @@ var options = {
 
 var printConsole = function (jsonString) {
 	var obj = JSON.parse(jsonString);
+    var array = [];
 	for (i=0;i<30;i++){
-		console.log(obj.items[i].full_name);
+		array.push(obj.items[i].full_name);
 	};
+
+    function printThis(item) {
+        console.log(item);
+    };
+    
+    array.map(printThis);
 };
 
 var req = https.request(options, function(res) {
