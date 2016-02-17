@@ -10,7 +10,7 @@ var options = {
 };
 
 var fs = require('fs');
-fs.writeFile("/tmp/test", "[", function(err) {
+fs.writeFile("/tmp/46", "[", function(err) {
     if (err) {
         return console.log(err);
     }
@@ -21,7 +21,7 @@ var printConsole = function (jsonString) {
     var array = [];
     for (i=0;i<30;i++){
         array.push(obj.items[i].full_name);
-                        console.log(i);
+        console.log("The file was saved!");
     };
 
     function printThis(item) {
@@ -42,7 +42,7 @@ var printConsole = function (jsonString) {
         var obj = JSON.parse(jsonString);
 
             var emptyJson = "{" + '"' + "full_name" + '"' + ":" + '"' + item + '"' + "," + '"' + "location" + '"' + ":" + '"' + obj.location + '"' + "}" + ",";
-            fs.appendFile('/tmp/test', emptyJson, function (err) {
+            fs.appendFile('/tmp/46', emptyJson, function (err) {
             });
         };
 
@@ -71,7 +71,7 @@ var printConsole = function (jsonString) {
     array.map(printThis);
 };
 
-setTimeout(function(){ fs.appendFile('/tmp/test', "]", function (err) {
+setTimeout(function(){ fs.appendFile('/tmp/46', "]", function (err) {
 });}, 3000);
 
 var req = https.request(options, function(res) {
