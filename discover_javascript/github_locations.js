@@ -13,7 +13,6 @@ var fs = require('fs');
 fs.writeFile("/tmp/46", "[", function(err) {
     if (err) {
         return console.log(err);
-        console.log("The file was saved!");
     }
 });
 
@@ -22,6 +21,7 @@ var printConsole = function (jsonString) {
     var array = [];
     for (i=0;i<30;i++){
         array.push(obj.items[i].full_name);
+        console.log("The file was saved!");
     };
 
     function printThis(item) {
