@@ -8,3 +8,4 @@ extheaders = {
 clnt = HTTPClient.new
 url = 'https://api.github.com/search/repositories?q=language:ruby&sort=stars&order=desc'
 File.write('/tmp/46', clnt.get_content(url, nil, extheaders))
+puts "The file was saved!"
