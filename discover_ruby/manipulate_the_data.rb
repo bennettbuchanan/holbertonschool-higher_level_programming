@@ -9,6 +9,6 @@ extheaders = {
 clnt = HTTPClient.new
 url = 'https://api.github.com/search/repositories?q=language:ruby&sort=stars&order=desc'
 response = clnt.get_content(url, nil, extheaders)
-hash = JSON.parse(response) 
+hash = JSON.parse(response)
 items = hash["items"]
-items.each{|e| puts e["full_name"]}
+items.map {|e| puts e["full_name"]}
