@@ -24,8 +24,8 @@ for number in json_data['items']:
 		response = urlopen(request2)
 		data = response.read()
 		location_data = json.loads(data)
-		array.append({'location': location_data['location'], 'full_name': json_data['items'][i]['full_name']})
-		final = json.dumps(array)
+		array.append({'full_name': json_data['items'][i]['full_name'], 'location': location_data['location']})
+		final = json.dumps(array, sort_keys=True)
 	except URLError, e:
 	    print 'Error', e
 	i += 1
