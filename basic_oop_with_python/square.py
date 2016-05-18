@@ -26,6 +26,7 @@ class Square():
     def set_center(self, coordinates):
         self.coordinates = coordinates
 
+    """Call the function and return the square."""
     def __call__(self):
         s = ""
         for j in range(0, self.__side_length):
