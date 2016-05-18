@@ -9,6 +9,9 @@ class Number(object):
     def set_value(self, sum):
         self.__value = sum
 
+    def get_value(self):
+        return self.__value
+
     """Redefine operators."""
     def __add__(self,other):
         return Number(self.__value + other.__value)
