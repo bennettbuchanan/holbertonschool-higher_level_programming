@@ -27,7 +27,7 @@ class Square():
         self.coordinates = coordinates
 
     """Call the function and return the square."""
-    def __call__(self):
+    def __str__(self):
         s = ""
         for j in range(0, self.__side_length):
             if j == 0 or j + 1 == self.__side_length:
