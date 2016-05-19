@@ -119,3 +119,59 @@ class Person(object):
     def __str__(self):
         """Return the full name of the Person."""
         return self.__first_name + " " + self.last_name
+
+"""Subclasses of Person"""
+
+class Baby(Person):
+     """A sublass of Person.
+
+    Keyword arguments:
+        
+    """
+    def need_help(self):
+        """Returns True for this subclass."""
+        return True
+    def is_young(self):
+        """Returns True for this subclass."""
+        return Tru
+
+class Teenager(Person):
+     """A sublass of Person.
+
+    Keyword arguments:
+        
+    """
+    def can_run(self):
+        """Returns True for this subclass."""
+        return True
+    def is_young(self):
+        """Returns True for this subclass."""
+        return True
+
+class Adult(Person):
+     """A sublass of Person.
+
+    Keyword arguments:
+        
+    """
+    def can_run(self):
+        """Returns True for this subclass."""
+        return True
+    def can_vote(self)(self):
+        """Returns True for this subclass."""
+        return True
+
+
+class Senior(Person):
+     """A sublass of Person.
+
+    Keyword arguments:
+        
+    """
+    def need_help(self):
+        """Returns True for this subclass."""
+        return True
+    def can_vote(self)(self):
+        """Returns True for this subclass."""
+        return True
+
