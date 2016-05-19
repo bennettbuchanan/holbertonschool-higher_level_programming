@@ -86,7 +86,14 @@ class Person(object):
         Return the current age (in years) based on date_of_birth and
         the date 05/20/2016.
         """
-        return 2016 - self.__date_of_birth[2]
+        date = [5, 20, 2016]
+        if self.__date_of_birth[0] >= date[0]:
+            if self.__date_of_birth[1] > date[1]:
+                return date[2] - (self.__date_of_birth[2] + 1)
+            else:
+                return date[2] - self.__date_of_birth[2]
+        else:
+            return date[2] - self.__date_of_birth[2]
 
     """Overloading methods for comparison operations."""
 
