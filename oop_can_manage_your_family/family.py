@@ -120,26 +120,32 @@ class Person(object):
         """Return the full name of the Person."""
         return self.__first_name + " " + self.last_name
 
-"""Subclasses of Person"""
+"""Subclasses of Person."""
 
 class Baby(Person):
-     """A sublass of Person.
+    """A sublass of Person.
 
     Keyword arguments:
-        
+
     """
     def need_help(self):
         """Returns True for this subclass."""
         return True
     def is_young(self):
         """Returns True for this subclass."""
-        return Tru
+        return True
+    def can_run(self):
+        """Returns False for this subclass."""
+        return False
+    def can_vote(self):
+        """Returns False for this subclass."""
+        return False
 
 class Teenager(Person):
-     """A sublass of Person.
+    """A sublass of Person.
 
     Keyword arguments:
-        
+
     """
     def can_run(self):
         """Returns True for this subclass."""
@@ -147,31 +153,47 @@ class Teenager(Person):
     def is_young(self):
         """Returns True for this subclass."""
         return True
+    def need_help(self):
+        """Returns False for this subclass."""
+        return False
+    def can_vote(self):
+        """Returns False for this subclass."""
+        return False
 
 class Adult(Person):
-     """A sublass of Person.
+    """A sublass of Person.
 
     Keyword arguments:
-        
+
     """
     def can_run(self):
         """Returns True for this subclass."""
         return True
-    def can_vote(self)(self):
+    def can_vote(self):
         """Returns True for this subclass."""
         return True
-
+    def need_help(self):
+        """Returns False for this subclass."""
+        return False
+    def is_young(self):
+        """Returns False for this subclass."""
+        return False
 
 class Senior(Person):
-     """A sublass of Person.
+    """A sublass of Person.
 
     Keyword arguments:
-        
+
     """
     def need_help(self):
         """Returns True for this subclass."""
         return True
-    def can_vote(self)(self):
+    def can_vote(self):
         """Returns True for this subclass."""
         return True
-
+    def is_young(self):
+        """Returns False for this subclass."""
+        return False
+    def can_run(self):
+        """Returns False for this subclass."""
+        return True
