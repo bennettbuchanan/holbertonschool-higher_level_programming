@@ -1,16 +1,27 @@
 import json
+"""Used for verifying a file's existence."""
 import os.path
 
 def load_from_file(filename):
     """Check for file existence, and if it's found, open a file passed as
-    filename and return json data objects.
+    filename and return Person objects (this does not return JSON objects).
+    In this way, the JSON objects in the file can be used with methods in the
+    Person class and its subclass if applicable.
     """
     if type(filename) != str or os.path.isfile(filename) != True:
         raise Exception("filename is not valid or doesn't exist")
     with open(filename) as json_file:
         data = json.load(json_file)
     json_file.close()
-    return data
+
+    arr = [5]
+    for i in range(0, len(data)):
+        print data[i]
+        p = Person(data[i]['id'], str(data[i]['first_name']), data[i]['date_of_birth'], str(data[i]['genre']), str(data[i]['eyes_color']))
+        p.last_name = "Buchanan"
+        arr[i] = p
+
+    return arr
 
 def save_to_file(list, filename):
     """Iterate through a list. If the type is not a dict (meaning it is
@@ -163,33 +174,38 @@ class Person(object):
             if k == "eyes_color":
                 self.__eyes_color = json[k]
 
+    def is_married(self):
+        self = self.json()
+        for k in self:
+            print self[k]
+
     """Overloading methods for comparison operations."""
 
     def __gt__(self, other):
         """Return True if this Person is older than the other Person."""
-        return 2016 - self.__date_of_birth[2] > 2016 - other.__date_of_birth[2]
+        return self.age() > other.age()
 
     def __ge__(self, other):
         """
         Return True if this Person is older than the other Person or the same
         age as them.
         """
-        return 2016 - self.__date_of_birth[2] >= 2016 - other.__date_of_birth[2]
+        return self.age() >= other.age()
 
     def __lt__(self, other):
         """Return True if this Person is younger than the other Person."""
-        return 2016 - self.__date_of_birth[2] < 2016 - other.__date_of_birth[2]
+        return self.age() < other.age()
 
     def __le__(self, other):
         """
         Return True if this Person is younger than the other Person or is
         same age as them.
         """
-        return 2016 - self.__date_of_birth[2] <= 2016 - other.__date_of_birth[2]
+        return self.age() <= other.age()
 
     def __eq__(self, other):
         """Return True if this Person is the same age as the other Person."""
-        return 2016 - self.__date_of_birth[2] == 2016 - other.__date_of_birth[2]
+        return self.age() == other.age()
 
     def __str__(self):
         """Return the full name of the Person."""
