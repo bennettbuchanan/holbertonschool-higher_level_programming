@@ -1,8 +1,12 @@
 import json
-import itertools
+import os.path
 
 def load_from_file(filename):
-    """Open a file passed as filename and return json data objects."""
+    """Check for file existence, and if it's found, open a file passed as
+    filename and return json data objects.
+    """
+    if type(filename) != str or os.path.isfile(filename) != True:
+        raise Exception("filename is not valid or doesn't exist")
     with open(filename) as json_file:
         data = json.load(json_file)
     json_file.close()
@@ -211,6 +215,9 @@ class Baby(Person):
     def can_vote(self):
         """Returns False for this subclass."""
         return False
+    def can_be_married(self):
+        """Returns False for this subclass."""
+        return False
 
 class Teenager(Person):
     """A sublass of Person.
@@ -230,6 +237,9 @@ class Teenager(Person):
     def can_vote(self):
         """Returns False for this subclass."""
         return False
+    def can_be_married(self):
+        """Returns False for this subclass."""
+        return False
 
 class Adult(Person):
     """A sublass of Person.
@@ -242,6 +252,9 @@ class Adult(Person):
         return True
     def can_vote(self):
         """Returns True for this subclass."""
+        return True
+    def can_be_married(self):
+        """Reutnrs True for this subclass."""
         return True
     def need_help(self):
         """Returns False for this subclass."""
@@ -262,9 +275,12 @@ class Senior(Person):
     def can_vote(self):
         """Returns True for this subclass."""
         return True
+    def can_be_married(self):
+        """Reutnrs True for this subclass."""
+        return True
     def is_young(self):
         """Returns False for this subclass."""
         return False
     def can_run(self):
         """Returns False for this subclass."""
-        return True
+        return False
