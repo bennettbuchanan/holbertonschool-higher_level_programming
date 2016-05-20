@@ -1,8 +1,36 @@
+import json
+import itertools
+
+def load_from_file(filename):
+    """Open a file passed as filename and return json data objects."""
+    with open(filename) as json_file:
+        data = json.load(json_file)
+    json_file.close()
+    return data
+
+def save_to_file(list, filename):
+    """Iterate through a list. If the type is not a dict (meaning it is
+    probably an inherited class object), then store the particular subclass
+    in var kind. Then append the name of the subclass to the dict. Finally,
+    open the filename that was passed as an argument and write the json
+    data to the file.
+    """
+    for i in range(0, len(list)):
+        if type(list[i]) != dict:
+            kind = type(list[i])
+            list[i] = list[i].json()
+            list[i]['kind'] = kind.__name__
+    target = open(filename, 'w')
+    list_dump = json.dumps(list)
+    target.write(list_dump)
+    target.close()
+
 """Class of Person"""
 class Person(object):
-    """A person. This Person must have either Blue, Green or Brown eyes and
-    be either a Female of Male. Returns a string that is the concatenated
-    first_name and last_name of the person with a space in between.
+    """A class of person. This Person must have either Blue, Green or Brown
+    eyes and be either a Female of Male. Returns a string that is the
+    concatenated first_name and last_name of the person with a space in
+    between.
 
     Keyword arguments:
         id -- A unique id for the Person instance.
@@ -71,7 +99,7 @@ class Person(object):
         """Return the first name of the Person."""
         return self.__first_name
 
-    """Additional functions."""
+    """Additional functions of Person class."""
 
     def is_male(self):
         """Return True if Person is Male, and False otherwise."""
@@ -79,7 +107,6 @@ class Person(object):
             return True
         else:
             return False
-
 
     def age(self):
         """
@@ -94,6 +121,43 @@ class Person(object):
                 return date[2] - self.__date_of_birth[2]
         else:
             return date[2] - self.__date_of_birth[2]
+
+    def json(self):
+        """
+        Return a Hash describing the person by these keys: id, eyes_color,
+        genre, date_of_birth, first_name, last_name.
+        """
+        desc = {
+        'id' : self.__id,
+        'eyes_color' : self.__eyes_color,
+        'genre' : self.__genre,
+        'date_of_birth' : self.__date_of_birth,
+        'first_name' : self.__first_name,
+        'last_name' : self.last_name
+        }
+        return desc
+
+    def load_from_json(self, json):
+        """Assign Person attributes based on json dict."""
+        if type(json) != dict:
+            Exception("json is not valid")
+        """
+        Loop through the json object, if a Person attribute is found,
+        update it based on its corresponding value in the json object.
+        """
+        for k in json:
+            if k == "id":
+                self.__id = json[k]
+            if k == "first_name":
+                self.__first_name = json[k]
+            if k == "date_of_birth":
+                self.__date_of_birth = json[k]
+            if k == "day":
+                self.__day = json[k]
+            if k == "genre":
+                self.__genre = json[k]
+            if k == "eyes_color":
+                self.__eyes_color = json[k]
 
     """Overloading methods for comparison operations."""
 
