@@ -2,44 +2,6 @@ import json
 """Used for verifying a file's existence."""
 import os.path
 
-def load_from_file(filename):
-    """Check for file existence, and if it's found, open a file passed as
-    filename and return Person objects (this does not return JSON objects).
-    In this way, the JSON objects in the file can be used with methods in the
-    Person class and its subclass if applicable.
-    """
-    if type(filename) != str or os.path.isfile(filename) != True:
-        raise Exception("filename is not valid or doesn't exist")
-    with open(filename) as json_file:
-        data = json.load(json_file)
-    json_file.close()
-
-    arr = [5]
-    for i in range(0, len(data)):
-        print data[i]
-        p = Person(data[i]['id'], str(data[i]['first_name']), data[i]['date_of_birth'], str(data[i]['genre']), str(data[i]['eyes_color']))
-        p.last_name = "Buchanan"
-        arr[i] = p
-
-    return arr
-
-def save_to_file(list, filename):
-    """Iterate through a list. If the type is not a dict (meaning it is
-    probably an inherited class object), then store the particular subclass
-    in var kind. Then append the name of the subclass to the dict. Finally,
-    open the filename that was passed as an argument and write the json
-    data to the file.
-    """
-    for i in range(0, len(list)):
-        if type(list[i]) != dict:
-            kind = type(list[i])
-            list[i] = list[i].json()
-            list[i]['kind'] = kind.__name__
-    target = open(filename, 'w')
-    list_dump = json.dumps(list)
-    target.write(list_dump)
-    target.close()
-
 """Class of Person"""
 class Person(object):
     """A class of person. This Person must have either Blue, Green or Brown
@@ -71,7 +33,8 @@ class Person(object):
 
         """
         Test to ensure user has entered a list of three integers for
-        date_of_birth attribute.
+        date_of_birth attribute. Also, test to ensure that the months and
+        days are within a valid range.
         """
         j = 0
         if type(date_of_birth) is not list:
@@ -82,6 +45,10 @@ class Person(object):
             j = j + 1
         if j != 3:
             raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[0] < 1 or date_of_birth[0] > 12:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[1] < 1 or date_of_birth[1] > 31:
+            raise Exception("date_of_birth is not a valid date")
         self.__date_of_birth = date_of_birth
 
         if genre not in Person.GENRES or type(genre) is not str:
@@ -91,6 +58,14 @@ class Person(object):
         if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
             raise exception("eyes_color is not valid")
         self.__eyes_color = eyes_color
+
+        """Add an empty array to enable testing for whether the Person has
+        children."""
+        self.children = []
+
+    """Setter."""
+    def just_married_with(self):
+        return self.__id
 
     """Getter of id, eyes_color, genre, date_of_birth, and first_name."""
 
@@ -148,8 +123,24 @@ class Person(object):
         'genre' : self.__genre,
         'date_of_birth' : self.__date_of_birth,
         'first_name' : self.__first_name,
-        'last_name' : self.last_name
         }
+
+        """
+        If the Class does not have an attribute of last_name, assign 'unknwon'
+        to the dict desc.
+        """
+        if hasattr(self, 'last_name'):
+            desc['last_name'] = self.last_name
+        else:
+            desc['last_name'] = "unknown"
+
+        """If the person is not married, set their status to zero. Otherwise
+        set it to the id of the person they are married to.
+        """
+        if hasattr(self, 'is_married_to'):
+            desc['is_married_to'] = self.is_married_to
+        else:
+            desc['is_married_to'] = "0"
         return desc
 
     def load_from_json(self, json):
@@ -173,11 +164,35 @@ class Person(object):
                 self.__genre = json[k]
             if k == "eyes_color":
                 self.__eyes_color = json[k]
+            if k == "is_married_to":
+                self.is_married_to = json[k]
+            if k == "last_name":
+                self.last_name = json[k]
 
     def is_married(self):
-        self = self.json()
-        for k in self:
-            print self[k]
+        """Check to see if attribute is_married_to does not equal zero. If it
+        is zero, then the person is not married. Otherwise, the value will be
+        the id of the person they are married to.
+        """
+        if self.is_married_to == 0:
+            return False
+        else:
+            return True
+
+    def just_married_with(self, p):
+        """Assign attribute is_married_to with the id of the person p. and
+        vice versa, such that they are connected by id numbers."""
+        if self.is_married_to != 0 or p.is_married_to != 0:
+            raise Exception("Already married")
+        if self.can_be_married() == False or p.can_be_married() == False:
+            raise Exception("Can't be married")
+
+        self.is_married_to = p.__id
+        p.is_married_to = self.__id
+        if p.__genre == "Female":
+            p.last_name = self.last_name
+        if self.__genre == "Female":
+            self.last_name = p.last_name
 
     """Overloading methods for comparison operations."""
 
@@ -219,6 +234,7 @@ class Baby(Person):
     Keyword arguments:
 
     """
+
     def need_help(self):
         """Returns True for this subclass."""
         return True
@@ -232,6 +248,9 @@ class Baby(Person):
         """Returns False for this subclass."""
         return False
     def can_be_married(self):
+        """Returns False for this subclass."""
+        return False
+    def can_have_child(self):
         """Returns False for this subclass."""
         return False
 
@@ -256,6 +275,9 @@ class Teenager(Person):
     def can_be_married(self):
         """Returns False for this subclass."""
         return False
+    def can_have_child(self):
+        """Returns False for this subclass."""
+        return False
 
 class Adult(Person):
     """A sublass of Person.
@@ -263,6 +285,71 @@ class Adult(Person):
     Keyword arguments:
 
     """
+    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+        """Tests for validity of function attributes. Returns a Baby object
+        with the attributes passed as parameters. The function also assigns
+        a list of ids (the first being the id of the instance p, and the second
+        the id passed as paremeter) to a public attribute children of self
+        (i.e., self.children). If either self or p is not an instance of an
+        Adult object, then raise an exception.
+
+        Keyword arguments:
+        p -- The person instance that this Person had a child with.
+        id -- The id of the Baby object.
+        first_name -- The first name of the Baby object.
+        date_of_birth --  The date of birth of the Baby. Takes the form of
+        list of three integers: date_of_birth[0] is month date_of_birth[1] is
+        day, date_of_birth[2] is year.
+        genre -- The gender of the Baby.
+        eyes_color -- The eye color of the Baby.
+        """
+
+        """Set all attibutes as private and test for validity."""
+        if type(id) is not int or id < 0:
+            raise Exception("id is not an integer")
+
+        if type(first_name) is not str or len(first_name) is 0:
+            raise Exception("string is not a string")
+
+        """
+        Test to ensure user has entered a list of three integers for
+        date_of_birth attribute. Also, test to ensure that the months and
+        days are within a valid range.
+        """
+        j = 0
+        if type(date_of_birth) is not list:
+            raise Exception("date_of_birth is not a valid date")
+        for n in date_of_birth:
+            if type(n) is not int:
+                raise Exception("date_of_birth is not a valid date")
+            j = j + 1
+        if j != 3:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[0] < 1 or date_of_birth[0] > 12:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[1] < 1 or date_of_birth[1] > 31:
+            raise Exception("date_of_birth is not a valid date")
+
+        if genre not in Person.GENRES or type(genre) is not str:
+            raise Exception("genre is not valid")
+
+        if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
+            raise exception("eyes_color is not valid")
+
+        if p.can_have_child() == False or self.can_have_child() == False:
+            raise Exception("Can't have baby")
+
+        """Assign a list of ids to the public attribute of self."""
+        self.children = [id, p.get_id()]
+
+        return Baby(id, first_name, date_of_birth, genre, eyes_color)
+
+    def adopt_child(self, c):
+        if self.can_have_child() != True:
+            raise Exception("Can't adopt child")
+
+        self.children.append(c.get_id())
+
     def can_run(self):
         """Returns True for this subclass."""
         return True
@@ -270,7 +357,10 @@ class Adult(Person):
         """Returns True for this subclass."""
         return True
     def can_be_married(self):
-        """Reutnrs True for this subclass."""
+        """Returns True for this subclass."""
+        return True
+    def can_have_child(self):
+        """Returns True for this subclass."""
         return True
     def need_help(self):
         """Returns False for this subclass."""
@@ -300,3 +390,87 @@ class Senior(Person):
     def can_run(self):
         """Returns False for this subclass."""
         return False
+    def can_have_child(self):
+        """Returns False for this subclass."""
+        return False
+
+def load_from_file(filename):
+    """Check for file existence, and if it's found, open a file passed as
+    filename and return Person objects (this does not return JSON objects).
+    In this way, the JSON objects in the file can be used with methods in the
+    Person class and its subclass if applicable.
+    """
+    if type(filename) != str or os.path.isfile(filename) != True:
+        raise Exception("filename is not valid or doesn't exist")
+    with open(filename) as json_file:
+        data = json.load(json_file)
+    json_file.close()
+
+    """Generate an array of Person (or a corresponding subclass) objects from
+    JSON objects.
+    """
+    arr = []
+    class_dict = {"Senior": Senior, "Adult": Adult, "Teenager": Teenager, "Baby": Baby}
+    for i in range(0, len(data)):
+        d = data[i]
+
+        """Loop through array, if the object is a subclass (i.e., it has a key
+        of 'kind'), then generate a class with the value of kind (the class
+        comes from the class_dict).
+        """
+        j = 0
+        for i in d:
+            """If the object has a key of 'kind', then we know this object
+            if a subclass of Person. Thus generate an instance with its
+            corresponding subclass. Otherwise create a Person instance.
+            """
+            if i == 'kind':
+                p = class_dict[d['kind']](d['id'], str(d['first_name']), d['date_of_birth'], str(d['genre']), str(d['eyes_color']))
+                break
+            if j + 1 == len(d):
+                p = Person(d['id'], str(d['first_name']), d['date_of_birth'], str(d['genre']), str(d['eyes_color']))
+            j = j + 1
+        j = 0
+        for i in d:
+            """If the object has a key of 'last_name', then the last name is
+            already set. Otherwise we need to set it to an empty string in
+            case we want to later turn it into a JSON object.
+            """
+            if i == 'last_name':
+                p.last_name = d['last_name']
+                break
+            if j + 1 == len(d):
+                p.last_name = "unknown"
+            j = j + 1
+        j = 0
+        for i in d:
+            """If the object has a key of 'last_name', then the last name is
+            already set. Otherwise we need to set it to an empty string in
+            case we want to later turn it into a JSON object.
+            """
+            if i == 'is_married_to':
+                p.is_married_to = d['is_married_to']
+                break
+            if j + 1 == len(d):
+                p.is_married_to = 0
+            j = j + 1
+        arr.append(p)
+    return arr
+
+def save_to_file(list, filename):
+    """Iterate through a list. If the type is not a dict (meaning it is
+    probably an inherited class object), then store the particular subclass
+    in var kind. Then append the name of the subclass to the dict. Finally,
+    open the filename that was passed as an argument and write the json
+    data to the file.
+    """
+    for i in range(0, len(list)):
+        if type(list[i]) != dict:
+            kind = type(list[i])
+            list[i] = list[i].json()
+
+            list[i]['kind'] = kind.__name__
+    target = open(filename, 'w')
+    list_dump = json.dumps(list)
+    target.write(list_dump)
+    target.close()
