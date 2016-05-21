@@ -140,7 +140,7 @@ class Person(object):
         if hasattr(self, 'is_married_to'):
             desc['is_married_to'] = self.is_married_to
         else:
-            desc['is_married_to'] = "0"
+            desc['is_married_to'] = 0
         return desc
 
     def load_from_json(self, json):
@@ -307,7 +307,7 @@ class Baby(Person):
             raise Exception("Can't adopt child")
 
         self.children.append(c.get_id())
-        
+
     def need_help(self):
         """Returns True for this subclass."""
         return True
@@ -432,7 +432,7 @@ class Adult(Person):
     Keyword arguments:
 
     """
-    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+    def has_child_with(self, *arg):
         """Tests for validity of function attributes. Returns a Baby object
         with the attributes passed as parameters. The function also assigns
         a list of ids (the first being the id of the instance p, and the second
@@ -440,7 +440,7 @@ class Adult(Person):
         (i.e., self.children). If either self or p is not an instance of an
         Adult object, then raise an exception.
 
-        Keyword arguments:
+        Keyword arguments as arg tuple:
         p -- The person instance that this Person had a child with.
         id -- The id of the Baby object.
         first_name -- The first name of the Baby object.
@@ -448,8 +448,31 @@ class Adult(Person):
         list of three integers: date_of_birth[0] is month date_of_birth[1] is
         day, date_of_birth[2] is year.
         genre -- The gender of the Baby.
-        eyes_color -- The eye color of the Baby.
+        eyes_color (optional) -- The eye color of the Baby.
         """
+        p = arg[0]
+        id = arg[1]
+        first_name = arg[2]
+        date_of_birth = arg[3]
+        genre = arg[4]
+
+        """If eyes color optional parameter is omitted, determine the
+        eyes_color based on the parents', otherwise eyes_color it determined
+        by the value passed as parameter (i.e., arg[5]).
+        """
+        if len(arg) == 5:
+            baby_eye_color = 0
+            if p.get_eyes_color() == "Blue" or self.get_eyes_color() == "Blue":
+                eyes_color = "Blue"
+            if p.get_eyes_color() == "Green" and self.get_eyes_color() == "Green":
+                eyes_color = "Green"
+            if p.get_eyes_color() == "Brown" or self.get_eyes_color() == "Brown":
+                eyes_color = "Brown"
+        else:
+            eyes_color = arg[5]
+
+        print "EYES COLOR:"
+        print eyes_color
 
         if type(id) is not int or id < 0:
             raise Exception("id is not an integer")
@@ -478,9 +501,6 @@ class Adult(Person):
 
         if genre not in Person.GENRES or type(genre) is not str:
             raise Exception("genre is not valid")
-
-        if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
-            raise exception("eyes_color is not valid")
 
         if type(p) == None:
             raise Exception("p is not an Adult of Senior")
@@ -698,7 +718,6 @@ def save_to_file(list, filename):
         if type(list[i]) != dict:
             kind = type(list[i])
             list[i] = list[i].json()
-
             list[i]['kind'] = kind.__name__
     target = open(filename, 'w')
     list_dump = json.dumps(list)
