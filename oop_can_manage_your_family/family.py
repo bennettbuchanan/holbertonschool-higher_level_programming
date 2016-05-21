@@ -234,7 +234,80 @@ class Baby(Person):
     Keyword arguments:
 
     """
+    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+        """Tests for validity of function attributes. Returns a Baby object
+        with the attributes passed as parameters. The function also assigns
+        a list of ids (the first being the id of the instance p, and the second
+        the id passed as paremeter) to a public attribute children of self
+        (i.e., self.children). If either self or p is not an instance of an
+        Adult object, then raise an exception.
 
+        Keyword arguments:
+        p -- The person instance that this Person had a child with.
+        id -- The id of the Baby object.
+        first_name -- The first name of the Baby object.
+        date_of_birth --  The date of birth of the Baby. Takes the form of
+        list of three integers: date_of_birth[0] is month date_of_birth[1] is
+        day, date_of_birth[2] is year.
+        genre -- The gender of the Baby.
+        eyes_color -- The eye color of the Baby.
+        """
+
+        if type(id) is not int or id < 0:
+            raise Exception("id is not an integer")
+
+        if type(first_name) is not str or len(first_name) is 0:
+            raise Exception("string is not a string")
+
+        """
+        Test to ensure user has entered a list of three integers for
+        date_of_birth attribute. Also, test to ensure that the months and
+        days are within a valid range.
+        """
+        j = 0
+        if type(date_of_birth) is not list:
+            raise Exception("date_of_birth is not a valid date")
+        for n in date_of_birth:
+            if type(n) is not int:
+                raise Exception("date_of_birth is not a valid date")
+            j = j + 1
+        if j != 3:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[0] < 1 or date_of_birth[0] > 12:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[1] < 1 or date_of_birth[1] > 31:
+            raise Exception("date_of_birth is not a valid date")
+
+        if genre not in Person.GENRES or type(genre) is not str:
+            raise Exception("genre is not valid")
+
+        if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
+            raise exception("eyes_color is not valid")
+
+        if type(p) == None:
+            raise Exception("p is not an Adult of Senior")
+
+        if type(p) != Adult:
+            if type(p) != Senior:
+                raise Exception("p is not an Adult of Senior")
+
+        if p.can_have_child() == False or self.can_have_child() == False:
+            raise Exception("Can't have baby")
+
+        """Assign a list of ids to the public attribute of self."""
+        self.children = [id, p.get_id()]
+
+        return Baby(id, first_name, date_of_birth, genre, eyes_color)
+
+    def adopt_child(self, c):
+        """Determine whether self can have a child. If so, append c instance
+        into the array of children ids.
+        """
+        if self.can_have_child() != True:
+            raise Exception("Can't adopt child")
+
+        self.children.append(c.get_id())
+        
     def need_help(self):
         """Returns True for this subclass."""
         return True
@@ -260,6 +333,80 @@ class Teenager(Person):
     Keyword arguments:
 
     """
+    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+        """Tests for validity of function attributes. Returns a Baby object
+        with the attributes passed as parameters. The function also assigns
+        a list of ids (the first being the id of the instance p, and the second
+        the id passed as paremeter) to a public attribute children of self
+        (i.e., self.children). If either self or p is not an instance of an
+        Adult object, then raise an exception.
+
+        Keyword arguments:
+        p -- The person instance that this Person had a child with.
+        id -- The id of the Baby object.
+        first_name -- The first name of the Baby object.
+        date_of_birth --  The date of birth of the Baby. Takes the form of
+        list of three integers: date_of_birth[0] is month date_of_birth[1] is
+        day, date_of_birth[2] is year.
+        genre -- The gender of the Baby.
+        eyes_color -- The eye color of the Baby.
+        """
+
+        if type(id) is not int or id < 0:
+            raise Exception("id is not an integer")
+
+        if type(first_name) is not str or len(first_name) is 0:
+            raise Exception("string is not a string")
+
+        """
+        Test to ensure user has entered a list of three integers for
+        date_of_birth attribute. Also, test to ensure that the months and
+        days are within a valid range.
+        """
+        j = 0
+        if type(date_of_birth) is not list:
+            raise Exception("date_of_birth is not a valid date")
+        for n in date_of_birth:
+            if type(n) is not int:
+                raise Exception("date_of_birth is not a valid date")
+            j = j + 1
+        if j != 3:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[0] < 1 or date_of_birth[0] > 12:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[1] < 1 or date_of_birth[1] > 31:
+            raise Exception("date_of_birth is not a valid date")
+
+        if genre not in Person.GENRES or type(genre) is not str:
+            raise Exception("genre is not valid")
+
+        if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
+            raise exception("eyes_color is not valid")
+
+        if type(p) == None:
+            raise Exception("p is not an Adult of Senior")
+
+        if type(p) != Adult:
+            if type(p) != Senior:
+                raise Exception("p is not an Adult of Senior")
+
+        if p.can_have_child() == False or self.can_have_child() == False:
+            raise Exception("Can't have baby")
+
+        """Assign a list of ids to the public attribute of self."""
+        self.children = [id, p.get_id()]
+
+        return Baby(id, first_name, date_of_birth, genre, eyes_color)
+
+    def adopt_child(self, c):
+        """Determine whether self can have a child. If so, append c instance
+        into the array of children ids.
+        """
+        if self.can_have_child() != True:
+            raise Exception("Can't adopt child")
+
+        self.children.append(c.get_id())
+
     def can_run(self):
         """Returns True for this subclass."""
         return True
@@ -304,7 +451,6 @@ class Adult(Person):
         eyes_color -- The eye color of the Baby.
         """
 
-        """Set all attibutes as private and test for validity."""
         if type(id) is not int or id < 0:
             raise Exception("id is not an integer")
 
@@ -336,6 +482,13 @@ class Adult(Person):
         if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
             raise exception("eyes_color is not valid")
 
+        if type(p) == None:
+            raise Exception("p is not an Adult of Senior")
+
+        if type(p) != Adult:
+            if type(p) != Senior:
+                raise Exception("p is not an Adult of Senior")
+
         if p.can_have_child() == False or self.can_have_child() == False:
             raise Exception("Can't have baby")
 
@@ -345,6 +498,9 @@ class Adult(Person):
         return Baby(id, first_name, date_of_birth, genre, eyes_color)
 
     def adopt_child(self, c):
+        """Determine whether self can have a child. If so, append c instance
+        into the array of children ids.
+        """
         if self.can_have_child() != True:
             raise Exception("Can't adopt child")
 
@@ -375,6 +531,80 @@ class Senior(Person):
     Keyword arguments:
 
     """
+    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+        """Tests for validity of function attributes. Returns a Baby object
+        with the attributes passed as parameters. The function also assigns
+        a list of ids (the first being the id of the instance p, and the second
+        the id passed as paremeter) to a public attribute children of self
+        (i.e., self.children). If either self or p is not an instance of an
+        Adult object, then raise an exception.
+
+        Keyword arguments:
+        p -- The person instance that this Person had a child with.
+        id -- The id of the Baby object.
+        first_name -- The first name of the Baby object.
+        date_of_birth --  The date of birth of the Baby. Takes the form of
+        list of three integers: date_of_birth[0] is month date_of_birth[1] is
+        day, date_of_birth[2] is year.
+        genre -- The gender of the Baby.
+        eyes_color -- The eye color of the Baby.
+        """
+
+        if type(id) is not int or id < 0:
+            raise Exception("id is not an integer")
+
+        if type(first_name) is not str or len(first_name) is 0:
+            raise Exception("string is not a string")
+
+        """
+        Test to ensure user has entered a list of three integers for
+        date_of_birth attribute. Also, test to ensure that the months and
+        days are within a valid range.
+        """
+        j = 0
+        if type(date_of_birth) is not list:
+            raise Exception("date_of_birth is not a valid date")
+        for n in date_of_birth:
+            if type(n) is not int:
+                raise Exception("date_of_birth is not a valid date")
+            j = j + 1
+        if j != 3:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[0] < 1 or date_of_birth[0] > 12:
+            raise Exception("date_of_birth is not a valid date")
+        if date_of_birth[1] < 1 or date_of_birth[1] > 31:
+            raise Exception("date_of_birth is not a valid date")
+
+        if genre not in Person.GENRES or type(genre) is not str:
+            raise Exception("genre is not valid")
+
+        if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
+            raise exception("eyes_color is not valid")
+
+        if type(p) == None:
+            raise Exception("p is not an Adult of Senior")
+
+        if type(p) != Adult:
+            if type(p) != Senior:
+                raise Exception("p is not an Adult of Senior")
+
+        if p.can_have_child() == False or self.can_have_child() == False:
+            raise Exception("Can't have baby")
+
+        """Assign a list of ids to the public attribute of self."""
+        self.children = [id, p.get_id()]
+
+        return Baby(id, first_name, date_of_birth, genre, eyes_color)
+
+    def adopt_child(self, c):
+        """Determine whether self can have a child. If so, append c instance
+        into the array of children ids.
+        """
+        if self.can_have_child() != True:
+            raise Exception("Can't adopt child")
+
+        self.children.append(c.get_id())
+
     def need_help(self):
         """Returns True for this subclass."""
         return True
