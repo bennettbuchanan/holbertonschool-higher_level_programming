@@ -234,7 +234,7 @@ class Baby(Person):
     Keyword arguments:
 
     """
-    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+    def has_child_with(self, *arg):
         """Tests for validity of function attributes. Returns a Baby object
         with the attributes passed as parameters. The function also assigns
         a list of ids (the first being the id of the instance p, and the second
@@ -242,7 +242,7 @@ class Baby(Person):
         (i.e., self.children). If either self or p is not an instance of an
         Adult object, then raise an exception.
 
-        Keyword arguments:
+        Keyword arguments as arg tuple:
         p -- The person instance that this Person had a child with.
         id -- The id of the Baby object.
         first_name -- The first name of the Baby object.
@@ -250,8 +250,28 @@ class Baby(Person):
         list of three integers: date_of_birth[0] is month date_of_birth[1] is
         day, date_of_birth[2] is year.
         genre -- The gender of the Baby.
-        eyes_color -- The eye color of the Baby.
+        eyes_color (optional) -- The eye color of the Baby.
         """
+        p = arg[0]
+        id = arg[1]
+        first_name = arg[2]
+        date_of_birth = arg[3]
+        genre = arg[4]
+
+        """If eyes color optional parameter is omitted, determine the
+        eyes_color based on the parents', otherwise eyes_color it determined
+        by the value passed as parameter (i.e., arg[5]).
+        """
+        if len(arg) == 5:
+            baby_eye_color = 0
+            if p.get_eyes_color() == "Blue" or self.get_eyes_color() == "Blue":
+                eyes_color = "Blue"
+            if p.get_eyes_color() == "Green" and self.get_eyes_color() == "Green":
+                eyes_color = "Green"
+            if p.get_eyes_color() == "Brown" or self.get_eyes_color() == "Brown":
+                eyes_color = "Brown"
+        else:
+            eyes_color = arg[5]
 
         if type(id) is not int or id < 0:
             raise Exception("id is not an integer")
@@ -281,9 +301,6 @@ class Baby(Person):
         if genre not in Person.GENRES or type(genre) is not str:
             raise Exception("genre is not valid")
 
-        if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
-            raise exception("eyes_color is not valid")
-
         if type(p) == None:
             raise Exception("p is not an Adult of Senior")
 
@@ -307,6 +324,48 @@ class Baby(Person):
             raise Exception("Can't adopt child")
 
         self.children.append(c.get_id())
+
+    def who_are_my_parents(self, list_person):
+        """Search in list_person (list of Person objects). These are the
+        parents of self. Return a list of first and last name strings of
+        Person for each person in list_person. To find the parents, compare
+        the date of birth with each item in the list. If they are the same,
+        then it is not one of the parents. Otherwise append the item to list.
+        Check that list_person is a list, and that each item in the list is a
+        Person object or a subclass thereof.
+        """
+        if type(list_person) != list:
+            raise Exception("list_person is not valid")
+        for i in list_person:
+            if type(i) != Person:
+                if type(i).__base__ != Person:
+                    raise Exception("list_person is not valid")
+        arr = []
+        for i in list_person:
+            if str(i.get_date_of_birth()) != str(self.get_date_of_birth()):
+                arr.append(i)
+        return arr
+
+    def who_are_my_grand_parents(self, list_person):
+        """Search in list_person (list of Person objects). These are the
+        grandparents of self. Return a list of first and last name strings of
+        Person for each person in list_person. To find grandparents, compare
+        the date of birth with each item in the list. If they are the same,
+        then it is not one of the grandparents. Otherwise append the item to
+        list. Check that list_person is a list, and that each item in the list
+        is a Person object or a subclass thereof.
+        """
+        if type(list_person) != list:
+            raise Exception("list_person is not valid")
+        for i in list_person:
+            if type(i) != Person:
+                if type(i).__base__ != Person:
+                    raise Exception("list_person is not valid")
+        arr = []
+        for i in list_person:
+            if str(i.get_date_of_birth()) != str(self.get_date_of_birth()):
+                arr.append(i)
+        return arr
 
     def need_help(self):
         """Returns True for this subclass."""
@@ -333,7 +392,7 @@ class Teenager(Person):
     Keyword arguments:
 
     """
-    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+    def has_child_with(self, *arg):
         """Tests for validity of function attributes. Returns a Baby object
         with the attributes passed as parameters. The function also assigns
         a list of ids (the first being the id of the instance p, and the second
@@ -341,7 +400,7 @@ class Teenager(Person):
         (i.e., self.children). If either self or p is not an instance of an
         Adult object, then raise an exception.
 
-        Keyword arguments:
+        Keyword arguments as arg tuple:
         p -- The person instance that this Person had a child with.
         id -- The id of the Baby object.
         first_name -- The first name of the Baby object.
@@ -349,8 +408,28 @@ class Teenager(Person):
         list of three integers: date_of_birth[0] is month date_of_birth[1] is
         day, date_of_birth[2] is year.
         genre -- The gender of the Baby.
-        eyes_color -- The eye color of the Baby.
+        eyes_color (optional) -- The eye color of the Baby.
         """
+        p = arg[0]
+        id = arg[1]
+        first_name = arg[2]
+        date_of_birth = arg[3]
+        genre = arg[4]
+
+        """If eyes color optional parameter is omitted, determine the
+        eyes_color based on the parents', otherwise eyes_color it determined
+        by the value passed as parameter (i.e., arg[5]).
+        """
+        if len(arg) == 5:
+            baby_eye_color = 0
+            if p.get_eyes_color() == "Blue" or self.get_eyes_color() == "Blue":
+                eyes_color = "Blue"
+            if p.get_eyes_color() == "Green" and self.get_eyes_color() == "Green":
+                eyes_color = "Green"
+            if p.get_eyes_color() == "Brown" or self.get_eyes_color() == "Brown":
+                eyes_color = "Brown"
+        else:
+            eyes_color = arg[5]
 
         if type(id) is not int or id < 0:
             raise Exception("id is not an integer")
@@ -380,9 +459,6 @@ class Teenager(Person):
         if genre not in Person.GENRES or type(genre) is not str:
             raise Exception("genre is not valid")
 
-        if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
-            raise exception("eyes_color is not valid")
-
         if type(p) == None:
             raise Exception("p is not an Adult of Senior")
 
@@ -406,6 +482,48 @@ class Teenager(Person):
             raise Exception("Can't adopt child")
 
         self.children.append(c.get_id())
+
+    def who_are_my_parents(self, list_person):
+        """Search in list_person (list of Person objects). These are the
+        parents of self. Return a list of first and last name strings of
+        Person for each person in list_person. To find the parents, compare
+        the date of birth with each item in the list. If they are the same,
+        then it is not one of the parents. Otherwise append the item to list.
+        Check that list_person is a list, and that each item in the list is a
+        Person object or a subclass thereof.
+        """
+        if type(list_person) != list:
+            raise Exception("list_person is not valid")
+        for i in list_person:
+            if type(i) != Person:
+                if type(i).__base__ != Person:
+                    raise Exception("list_person is not valid")
+        arr = []
+        for i in list_person:
+            if str(i.get_date_of_birth()) != str(self.get_date_of_birth()):
+                arr.append(i)
+        return arr
+
+    def who_are_my_grand_parents(self, list_person):
+        """Search in list_person (list of Person objects). These are the
+        grandparents of self. Return a list of first and last name strings of
+        Person for each person in list_person. To find grandparents, compare
+        the date of birth with each item in the list. If they are the same,
+        then it is not one of the grandparents. Otherwise append the item to
+        list. Check that list_person is a list, and that each item in the list
+        is a Person object or a subclass thereof.
+        """
+        if type(list_person) != list:
+            raise Exception("list_person is not valid")
+        for i in list_person:
+            if type(i) != Person:
+                if type(i).__base__ != Person:
+                    raise Exception("list_person is not valid")
+        arr = []
+        for i in list_person:
+            if str(i.get_date_of_birth()) != str(self.get_date_of_birth()):
+                arr.append(i)
+        return arr
 
     def can_run(self):
         """Returns True for this subclass."""
@@ -471,9 +589,6 @@ class Adult(Person):
         else:
             eyes_color = arg[5]
 
-        print "EYES COLOR:"
-        print eyes_color
-
         if type(id) is not int or id < 0:
             raise Exception("id is not an integer")
 
@@ -525,6 +640,48 @@ class Adult(Person):
             raise Exception("Can't adopt child")
 
         self.children.append(c.get_id())
+
+    def who_are_my_parents(self, list_person):
+        """Search in list_person (list of Person objects). These are the
+        parents of self. Return a list of first and last name strings of
+        Person for each person in list_person. To find the parents, compare
+        the date of birth with each item in the list. If they are the same,
+        then it is not one of the parents. Otherwise append the item to list.
+        Check that list_person is a list, and that each item in the list is a
+        Person object or a subclass thereof.
+        """
+        if type(list_person) != list:
+            raise Exception("list_person is not valid")
+        for i in list_person:
+            if type(i) != Person:
+                if type(i).__base__ != Person:
+                    raise Exception("list_person is not valid")
+        arr = []
+        for i in list_person:
+            if str(i.get_date_of_birth()) != str(self.get_date_of_birth()):
+                arr.append(i)
+        return arr
+
+    def who_are_my_grand_parents(self, list_person):
+        """Search in list_person (list of Person objects). These are the
+        grandparents of self. Return a list of first and last name strings of
+        Person for each person in list_person. To find grandparents, compare
+        the date of birth with each item in the list. If they are the same,
+        then it is not one of the grandparents. Otherwise append the item to
+        list. Check that list_person is a list, and that each item in the list
+        is a Person object or a subclass thereof.
+        """
+        if type(list_person) != list:
+            raise Exception("list_person is not valid")
+        for i in list_person:
+            if type(i) != Person:
+                if type(i).__base__ != Person:
+                    raise Exception("list_person is not valid")
+        arr = []
+        for i in list_person:
+            if str(i.get_date_of_birth()) != str(self.get_date_of_birth()):
+                arr.append(i)
+        return arr
 
     def can_run(self):
         """Returns True for this subclass."""
@@ -551,7 +708,7 @@ class Senior(Person):
     Keyword arguments:
 
     """
-    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+    def has_child_with(self, *arg):
         """Tests for validity of function attributes. Returns a Baby object
         with the attributes passed as parameters. The function also assigns
         a list of ids (the first being the id of the instance p, and the second
@@ -559,7 +716,7 @@ class Senior(Person):
         (i.e., self.children). If either self or p is not an instance of an
         Adult object, then raise an exception.
 
-        Keyword arguments:
+        Keyword arguments as arg tuple:
         p -- The person instance that this Person had a child with.
         id -- The id of the Baby object.
         first_name -- The first name of the Baby object.
@@ -567,8 +724,28 @@ class Senior(Person):
         list of three integers: date_of_birth[0] is month date_of_birth[1] is
         day, date_of_birth[2] is year.
         genre -- The gender of the Baby.
-        eyes_color -- The eye color of the Baby.
+        eyes_color (optional) -- The eye color of the Baby.
         """
+        p = arg[0]
+        id = arg[1]
+        first_name = arg[2]
+        date_of_birth = arg[3]
+        genre = arg[4]
+
+        """If eyes color optional parameter is omitted, determine the
+        eyes_color based on the parents', otherwise eyes_color it determined
+        by the value passed as parameter (i.e., arg[5]).
+        """
+        if len(arg) == 5:
+            baby_eye_color = 0
+            if p.get_eyes_color() == "Blue" or self.get_eyes_color() == "Blue":
+                eyes_color = "Blue"
+            if p.get_eyes_color() == "Green" and self.get_eyes_color() == "Green":
+                eyes_color = "Green"
+            if p.get_eyes_color() == "Brown" or self.get_eyes_color() == "Brown":
+                eyes_color = "Brown"
+        else:
+            eyes_color = arg[5]
 
         if type(id) is not int or id < 0:
             raise Exception("id is not an integer")
@@ -598,9 +775,6 @@ class Senior(Person):
         if genre not in Person.GENRES or type(genre) is not str:
             raise Exception("genre is not valid")
 
-        if eyes_color not in Person.EYES_COLORS or type(eyes_color) is not str:
-            raise exception("eyes_color is not valid")
-
         if type(p) == None:
             raise Exception("p is not an Adult of Senior")
 
@@ -624,6 +798,27 @@ class Senior(Person):
             raise Exception("Can't adopt child")
 
         self.children.append(c.get_id())
+
+    def who_are_my_grandchildren(self, list_person):
+        """Search in list_person (list of Person objects). These are the
+        grandchildren of self. Return a list of first and last name strings of
+        Person for each person in list_person. To find grandchildren, compare
+        the date of birth with each item in the list. If they are the same,
+        then it is not one of the grandchildren. Otherwise append the item to
+        list. Check that list_person is a list, and that each item in the list
+        is a Person object or a subclass thereof.
+        """
+        if type(list_person) != list:
+            raise Exception("list_person is not valid")
+        for i in list_person:
+            if type(i) != Person:
+                if type(i).__base__ != Person:
+                    raise Exception("list_person is not valid")
+        arr = []
+        for i in list_person:
+            if str(i.get_date_of_birth()) != str(self.get_date_of_birth()):
+                arr.append(i)
+        return arr
 
     def need_help(self):
         """Returns True for this subclass."""
