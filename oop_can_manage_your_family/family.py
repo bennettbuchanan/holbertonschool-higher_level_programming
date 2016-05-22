@@ -223,8 +223,11 @@ class Person(object):
         return self.age() == other.age()
 
     def __str__(self):
-        """Return the full name of the Person."""
-        return self.__first_name + " " + self.last_name
+        """Return the name of the Person (includes last_name if it's set)."""
+        if hasattr(self, 'last_name'):
+            return self.__first_name + " " + self.last_name
+        else:
+            return self.__first_name
 
 """Subclasses of Person."""
 
