@@ -314,8 +314,9 @@ class Baby(Person):
         if p.can_have_child() == False or self.can_have_child() == False:
             raise Exception("Can't have baby")
 
-        """Assign a list of ids to the public attribute of self."""
-        self.children = [id, p.get_id()]
+        """Append Baby's id to the public children attribute of self and p."""
+        self.children.append(id)
+        p.children.append(id)
 
         return Baby(id, first_name, date_of_birth, genre, eyes_color)
 
@@ -472,8 +473,9 @@ class Teenager(Person):
         if p.can_have_child() == False or self.can_have_child() == False:
             raise Exception("Can't have baby")
 
-        """Assign a list of ids to the public attribute of self."""
-        self.children = [id, p.get_id()]
+        """Append Baby's id to the public children attribute of self and p."""
+        self.children.append(id)
+        p.children.append(id)
 
         return Baby(id, first_name, date_of_birth, genre, eyes_color)
 
@@ -630,8 +632,9 @@ class Adult(Person):
         if p.can_have_child() == False or self.can_have_child() == False:
             raise Exception("Can't have baby")
 
-        """Assign a list of ids to the public attribute of self."""
-        self.children = [id, p.get_id()]
+        """Append Baby's id to the public children attribute of self and p."""
+        self.children.append(id)
+        p.children.append(id)
 
         return Baby(id, first_name, date_of_birth, genre, eyes_color)
 
@@ -788,8 +791,9 @@ class Senior(Person):
         if p.can_have_child() == False or self.can_have_child() == False:
             raise Exception("Can't have baby")
 
-        """Assign a list of ids to the public attribute of self."""
-        self.children = [id, p.get_id()]
+        """Append Baby's id to the public children attribute of self and p."""
+        self.children.append(id)
+        p.children.append(id)
 
         return Baby(id, first_name, date_of_birth, genre, eyes_color)
 
@@ -921,3 +925,13 @@ def save_to_file(list, filename):
     list_dump = json.dumps(list)
     target.write(list_dump)
     target.close()
+
+
+def display(list):
+    for i in list:
+        if i.is_married() == True:
+            print "Married"
+            if i.get_genre() == "Female":
+                print "Female"
+                i.just_married_with()
+        print i
