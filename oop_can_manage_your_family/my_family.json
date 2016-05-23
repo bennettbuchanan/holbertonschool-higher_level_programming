@@ -1,0 +1,28 @@
+[{
+    "first_name": "marc",
+    "last_name": "Coldin",
+    "is_married_to": 0,
+    "kind": "Adult",
+    "genre": "Female",
+    "date_of_birth": [7, 4, 1910],
+    "eyes_color": "Green",
+    "id": 1
+}, {
+    "first_name": "vanessa",
+    "last_name": "Coldin",
+    "is_married_to": 0,
+    "kind": "Adult",
+    "genre": "Female",
+    "date_of_birth": [3, 4, 1950],
+    "eyes_color": "Blue",
+    "id": 2
+}, {
+    "first_name": "boby",
+    "last_name": "Dupont",
+    "is_married_to": 2,
+    "kind": "Baby",
+    "genre": "Female",
+    "date_of_birth": [3, 4, 1950],
+    "eyes_color": "Green",
+    "id": 3
+}]
