@@ -327,6 +327,10 @@ class Baby(Person):
         if self.can_have_child() != True:
             raise Exception("Can't adopt child")
 
+        if type(c) != Baby:
+            if type(c) != Teenager:
+                raise Exception("c can't be adopted")
+
         self.children.append(c.get_id())
 
     def who_are_my_parents(self, list_person):
@@ -485,6 +489,10 @@ class Teenager(Person):
         """
         if self.can_have_child() != True:
             raise Exception("Can't adopt child")
+
+        if type(c) != Baby:
+            if type(c) != Teenager:
+                raise Exception("c can't be adopted")
 
         self.children.append(c.get_id())
 
@@ -645,6 +653,10 @@ class Adult(Person):
         if self.can_have_child() != True:
             raise Exception("Can't adopt child")
 
+        if type(c) != Baby:
+            if type(c) != Teenager:
+                raise Exception("c can't be adopted")
+
         self.children.append(c.get_id())
 
     def who_are_my_parents(self, list_person):
@@ -803,6 +815,10 @@ class Senior(Person):
         """
         if self.can_have_child() != True:
             raise Exception("Can't adopt child")
+
+        if type(c) != Baby:
+            if type(c) != Teenager:
+                raise Exception("c can't be adopted")
 
         self.children.append(c.get_id())
 
