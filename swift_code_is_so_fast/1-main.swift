@@ -1,4 +1,4 @@
-var my_string = "a!a"
+var my_string = "Hello"
 if (is_palindrome(my_string)) {
     print("\(my_string) is a palindrome!")
 }
