@@ -16,9 +16,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var button_coin: UIButton!
     @IBOutlet weak var labelCounter: UILabel!
     
+    let best_taps_score = "best_taps_score.txt"
     var timer = NSTimer()
     var counter = 0
     var taps_requested: Int = 0
+    
     
     @IBAction func clickPlayButton(sender: AnyObject) {
         // Check to see if the text entered is an Int, intialize the game.
@@ -87,6 +89,7 @@ class ViewController: UIViewController {
         textfield_number.hidden = false
         
         timer.invalidate()
+        fileSave(counter)
         counter = 0
         updateText()
     }
@@ -99,6 +102,28 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func fileSave (time: Int) {
+        // Take the time the user reached and write it to a file.
+        let gameTime = String(time)
+        
+        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+            let path = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent(best_taps_score)
+            
+            // Write
+            do {
+                try gameTime.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+            }
+            catch {/* error handling here */}
+            
+            
+            do {
+                let gameTime = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+                print(gameTime)
+            }
+            catch {/* error handling here */}
+        }
     }
 }
 
