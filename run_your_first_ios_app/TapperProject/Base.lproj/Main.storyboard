@@ -73,6 +73,12 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81e-K2-Zci">
+                                <rect key="frame" x="283" y="359" width="34" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -86,6 +92,8 @@
                             <constraint firstItem="CGe-eR-AIs" firstAttribute="top" secondItem="akJ-ct-xww" secondAttribute="bottom" constant="10" id="S2S-1F-zYq"/>
                             <constraint firstItem="P9h-2H-ge1" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="SKX-Mg-rLY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="P9h-2H-ge1" secondAttribute="trailing" constant="-20" id="cN1-Tm-w5P"/>
+                            <constraint firstItem="Cjs-8j-5QG" firstAttribute="top" secondItem="81e-K2-Zci" secondAttribute="bottom" constant="40" id="dVk-Sh-JCK"/>
+                            <constraint firstItem="81e-K2-Zci" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ffM-SU-rlS"/>
                             <constraint firstItem="o73-K8-gkA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fsn-RX-Rs1"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="P9h-2H-ge1" secondAttribute="bottom" id="g3a-e3-jnK"/>
                             <constraint firstItem="akJ-ct-xww" firstAttribute="top" secondItem="o73-K8-gkA" secondAttribute="bottom" constant="10" id="niZ-4r-2zj"/>
@@ -97,6 +105,7 @@
                     <connections>
                         <outlet property="button_coin" destination="o73-K8-gkA" id="hCC-rq-Si3"/>
                         <outlet property="button_play" destination="EIq-lH-i8h" id="1JR-k9-u7F"/>
+                        <outlet property="highScore" destination="81e-K2-Zci" id="fCG-Ue-nBv"/>
                         <outlet property="image_tapper" destination="X9m-pT-Yg7" id="RUm-rs-gXx"/>
                         <outlet property="labelCounter" destination="CGe-eR-AIs" id="4jk-OF-lLZ"/>
                         <outlet property="label_taps" destination="akJ-ct-xww" id="Pcj-wd-Bz6"/>

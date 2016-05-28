@@ -15,12 +15,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var label_taps: UILabel!
     @IBOutlet weak var button_coin: UIButton!
     @IBOutlet weak var labelCounter: UILabel!
+    @IBOutlet weak var highScore: UILabel!
     
     let best_taps_score = "best_taps_score.txt"
     var timer = NSTimer()
     var counter = 0
     var taps_requested: Int = 0
-    
     
     @IBAction func clickPlayButton(sender: AnyObject) {
         // Check to see if the text entered is an Int, intialize the game.
@@ -121,6 +121,7 @@ class ViewController: UIViewController {
             do {
                 let gameTime = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
                 print(gameTime)
+                highScore.text = "Top: " + (gameTime as String)
             }
             catch {/* error handling here */}
         }
