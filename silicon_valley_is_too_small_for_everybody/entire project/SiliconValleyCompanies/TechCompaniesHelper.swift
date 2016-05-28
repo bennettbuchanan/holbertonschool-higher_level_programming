@@ -1,5 +1,5 @@
 //
-//  CompaniesListViewController.swift
+//  TechCompaniesHelper.swift
 //  SiliconValleyCompanies
 //
 //  Created by Bennett Buchanan on 5/26/16.
@@ -8,13 +8,15 @@
 
 import UIKit
 
-class CompaniesListViewController: UITableViewController {
+class TechCompaniesHelper: UITableViewController {
     
-    var i: Int = 0
+    let companies:[String] = ["Holberton", "Linkedin", "Docker", "Google", "Yahoo", "Apple"]
     
-    // Populate companiesList array with the companies declared in TechCompaniesHeplper Class.
-    var companiesList: [String] = TechCompaniesHelper().getTechCompanies()
-
+    func getTechCompanies() -> [String] {
+        // Return the array of comapnies and schools.
+        return companies
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,33 +36,23 @@ class CompaniesListViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 0
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return companiesList.count
+        return 0
     }
-    
+
+    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CompanyCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
-        // Assign the string element of the array. As the title.
-        cell.textLabel?.text = companiesList[i]
-        
-        // Assign the strings as the subtitle.
-        if companiesList[i] == "Holberton" {
-            cell.detailTextLabel?.text = "I love studying"
-        }
-        else {
-            cell.detailTextLabel?.text = "I love working"
-        }
-
-        i = i + 1
+        // Configure the cell...
 
         return cell
     }
-    
+    */
 
     /*
     // Override to support conditional editing of the table view.

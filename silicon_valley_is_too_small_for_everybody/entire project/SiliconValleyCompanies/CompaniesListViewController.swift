@@ -1,5 +1,5 @@
 //
-//  TechCompaniesHelper.swift
+//  CompaniesListViewController.swift
 //  SiliconValleyCompanies
 //
 //  Created by Bennett Buchanan on 5/26/16.
@@ -8,14 +8,11 @@
 
 import UIKit
 
-class TechCompaniesHelper: UITableViewController {
+class CompaniesListViewController: UITableViewController {
     
-    let companies:[String] = ["Holberton", "Linkedin", "Docker", "Google", "Yahoo", "Apple"]
-    
-    func getTechCompanies() -> [String] {
-        return companies
-    }
-    
+    // Populate companiesList array with the companies declared in TechCompaniesHeplper Class.
+    var companiesList: [String] = TechCompaniesHelper().getTechCompanies()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,23 +32,31 @@ class TechCompaniesHelper: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return companiesList.count
     }
-
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("CompanyCell", forIndexPath: indexPath)
 
-        // Configure the cell...
+        // Assign the string element of the array. As the title.
+        cell.textLabel?.text = companiesList[indexPath.row]
+        
+        // Assign the strings as the subtitle.
+        if companiesList[indexPath.row] == "Holberton" {
+            cell.detailTextLabel?.text = "I love studying"
+        }
+        else {
+            cell.detailTextLabel?.text = "I love working"
+        }
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
