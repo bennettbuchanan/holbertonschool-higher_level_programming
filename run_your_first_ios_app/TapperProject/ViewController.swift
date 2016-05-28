@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import Social
 
 class ViewController: UIViewController {
+    // ViewController class for Tapper game.
     
     @IBOutlet weak var image_tapper: UIImageView!
     @IBOutlet weak var button_play: UIButton!
@@ -106,6 +108,24 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func twitterButtonPushed(sender: AnyObject) {
+        // Opens an option to share on Twitter.
+        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) {
+            
+            let tweetShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+            
+            self.presentViewController(tweetShare, animated: true, completion: nil)
+            
+        } else {
+            
+            let alert = UIAlertController(title: "Accounts", message: "Please login to a Twitter account to tweet.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     func fileSave (time: Int) {
