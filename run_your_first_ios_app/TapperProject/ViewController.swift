@@ -22,6 +22,10 @@ class ViewController: UIViewController {
     var counter = 0
     var taps_requested: Int = 0
     
+    override func viewDidAppear(animated: Bool) {
+        highScore.text = getHighScore()
+    }
+    
     @IBAction func clickPlayButton(sender: AnyObject) {
         // Check to see if the text entered is an Int, intialize the game.
         
@@ -121,10 +125,24 @@ class ViewController: UIViewController {
             do {
                 let gameTime = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
                 print(gameTime)
-                highScore.text = "Top: " + (gameTime as String)
+                highScore.text = "Be fast: " + (gameTime as String)
             }
             catch {/* error handling here */}
         }
+    }
+    
+    func getHighScore() -> String {
+        // Return the high score stored in the file for intial display.
+        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+            let path = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent(best_taps_score)
+            
+            do {
+                let gameTime = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+                return "Be fast: " + (gameTime as String)
+            }
+            catch {/* error handling here */}
+        }
+        return "Be fast: "
     }
 }
 
