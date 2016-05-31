@@ -19,29 +19,20 @@ class TaskView(tk.Toplevel):
         """Ensure widget instances are deleted."""
         self.protocol('WM_DELETE_WINDOW', self.master.destroy)
 
-        self.toggle_button = Button(self, text = "Reverse", width = 10, command = self.toggle)
+        self.__title_var = tk.StringVar()
+        self.__title_label = tk.Label(self, textvariable = self.__title_var)
+        self.__title_label.pack(side = RIGHT, padx = 5, pady = 5)
+
+        self.toggle_button = tk.Button(self, text = "Reverse", width = 10)
         self.toggle_button.pack(side = LEFT, padx = 5, pady = 5)
 
     def update_title(self, title):
-        """Set the initial title value, and callback and label."""
+        """Set the initial title value, and callback and label.
+
+        Keyword arguments:
+        title -- The title to be set in the Label.
+        """
         if type(title) != str:
             raise Exception("title is not a string")
 
-        self.__title_var = StringVar()
-        textvariable = self.__title_var
-        textvariable.set(title)
-
-        self.__t = TaskModel(textvariable.get())
-        self.__t.set_callback_title(self.callback)
-
-        self.__title_label = Label(self, text = self.__t)
-        self.__title_label.pack(side = RIGHT, padx = 5, pady = 5)
-
-    def toggle(self):
-        """Call the toggle method on the instance t, and updates the label."""
-        self.__t.toggle()
-        self.__title_label['text'] = self.__t
-
-    def callback(self, value):
-        """Set a callback which does nothing, to enable calling toggle()."""
-        pass
+        self.__title_var.set(title)
