@@ -73,6 +73,26 @@ class Car(object):
         brandNode.appendChild(doc.createTextNode(self.__brand))
         return carNode
 
+    def detailed_xml(self, doc):
+        """Return an XML DOM element with the attributes and values."""
+        carNode = doc.createElement("car")
+        carNode.setAttribute("nb_doors", str(self.__nb_doors))
+        carNode.setAttribute("weight", str(1000))
+        nameNode = doc.createElement("name")
+        carNode.appendChild(nameNode)
+        nameNode.appendChild(doc.createCDATASection(self.__name))
+        brandNode = doc.createElement("brand")
+        carNode.appendChild(brandNode)
+        brandNode.appendChild(doc.createCDATASection(u"\u00a9" + self.__brand))
+        yearNode = doc.createElement("year")
+        yearNode.appendChild(doc.createTextNode("2015"))
+        carNode.appendChild(yearNode)
+        return carNode
+
+    def to_comma(self):
+        """Return the data as a CSV."""
+        return self.__name + "," + self.__brand + "," + str(self.__nb_doors) + "\n"
+
     def __str__(self):
         """Return the attributes of this class."""
         return self.__name + " " + self.__brand + " (" + str(self.__nb_doors) + ")"
