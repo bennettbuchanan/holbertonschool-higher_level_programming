@@ -1,6 +1,6 @@
 1) 2
 2) 4
-3) "red_cardigan.jpg"
+3) red
 4) 39.95
 5) 4
 6) item_number
