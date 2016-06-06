@@ -3,6 +3,7 @@ import json
 from xml.dom.minidom import Document
 from car import Car
 
+
 """Load data from the URL and write to a file."""
 url = "http://173.246.108.142/oop/cars.json"
 response = urllib.urlopen(url)

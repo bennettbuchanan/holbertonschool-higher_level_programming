@@ -1,8 +1,9 @@
 import json
 
+
 class Car(object):
     def __init__(self, *args, **kwargs):
-        """Function description.
+        """Creates a car object from data passed.
         Keyword arguments:
         *args -- A tuple of arguments passed.
         **kwargs -- A dictionary of arguments.
@@ -18,6 +19,28 @@ class Car(object):
             self.__name = kwargs['name']
             self.__brand = kwargs['brand']
             self.__nb_doors = kwargs['nb_doors']
+        elif len(args) == 1 and type(args[0]) == str:
+            """If a single string with two commas is passed, parse it for the
+            attributes.
+            """
+            tmp = []
+            i = 0
+            for c in args[i]:
+                if c != ',' and i == 0:
+                    tmp.append(c)
+                    self.__name = ''.join(tmp)
+                elif c != ',' and i == 1:
+                    tmp.append(c)
+                    self.__brand = ''.join(tmp)
+                elif c != ',' and i == 2:
+                    tmp.append(c)
+                    nb_doors_str = ''.join(tmp)
+                    self.__nb_doors = int(nb_doors_str)
+                elif i > 2:
+                    break
+                else:
+                    i += 1
+                    del tmp[:]
         else:
             if type(args[0]['name']) is not str or len(args[0]['name']) is 0:
                 raise Exception("name is not a string")
