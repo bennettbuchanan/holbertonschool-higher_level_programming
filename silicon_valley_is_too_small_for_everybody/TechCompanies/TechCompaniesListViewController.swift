@@ -63,11 +63,15 @@ class TechCompaniesListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("techCell", forIndexPath: indexPath)
         
         if indexPath.section == 0 {
+            cell.textLabel?.textAlignment = NSTextAlignment.Center
             cell.textLabel?.text = schoolList[indexPath.row].name
-            cell.detailTextLabel?.text = "I love studying at " + schoolList[indexPath.row].name
+            cell.detailTextLabel?.text = "I love studying"
+            cell.imageView?.image = UIImage(named: schoolList[indexPath.row].imageName)
         } else {
+            cell.textLabel?.textAlignment = NSTextAlignment.Center
             cell.textLabel?.text = techCompanyList[indexPath.row].name
-            cell.detailTextLabel?.text = "I love working at " + techCompanyList[indexPath.row].name
+            cell.detailTextLabel?.text = "I love working"
+            cell.imageView?.image = UIImage(named: techCompanyList[indexPath.row].imageName)
         }
 
         return cell
