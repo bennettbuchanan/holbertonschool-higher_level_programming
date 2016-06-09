@@ -111,13 +111,29 @@ class TechCompaniesListViewController: UITableViewController {
 
 
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "techDetailSegue" {
-            let _ = segue.destinationViewController as? TechCompanyDetailViewController
+            if let destination = segue.destinationViewController as? TechCompanyDetailViewController {
+                
+                let path = tableView.indexPathForSelectedRow
+                if path!.section == 0 {
+                    destination.entity = schoolList[path!.row]
+                } else {
+                    destination.entity = techCompanyList[path!.row]
+                }
+
+            
+            }
         }
     }
+    
+//    // In a storyboard-based application, you will often want to do a little preparation before navigation
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//        if segue.identifier == "techDetailSegue" {
+//            let _ = segue.destinationViewController as? TechCompanyDetailViewController
+//        }
+//    }
 }

@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dt9-FX-96t">
-                                <rect key="frame" x="0.0" y="40" width="600" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dt9-FX-96t">
+                                <rect key="frame" x="0.0" y="84" width="600" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="d0U-i5-Tz7"/>
                                     <constraint firstAttribute="height" constant="40" id="mup-n6-Up3"/>
@@ -27,9 +27,11 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4tg-vq-b9Z">
-                                <rect key="frame" x="200" y="100" width="200" height="200"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4tg-vq-b9Z">
+                                <rect key="frame" x="200" y="144" width="200" height="200"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="Zd3-i1-bEO"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="gDd-sc-T4I"/>
                                     <constraint firstAttribute="height" constant="200" id="ndC-Bl-IYX"/>
                                     <constraint firstAttribute="width" constant="200" id="pZc-g2-A6W"/>
                                 </constraints>
@@ -44,13 +46,13 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="image_entity" destination="4tg-vq-b9Z" id="d4E-S4-fUe"/>
-                        <outlet property="label_entity" destination="dt9-FX-96t" id="lqk-4G-Lci"/>
+                        <outlet property="image_entity" destination="4tg-vq-b9Z" id="uox-P1-wE1"/>
+                        <outlet property="label_entity" destination="dt9-FX-96t" id="LxE-DC-Pg5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BPd-g9-nBl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="144" y="1262"/>
+            <point key="canvasLocation" x="156" y="1264"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="8aR-rx-6ks">

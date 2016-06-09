@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D46A2171D08CDDF00D8F486 /* TechCompanyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D46A2161D08CDDF00D8F486 /* TechCompanyDetailViewController.swift */; };
+		7D6698141D0919D6006EB0C2 /* TechCompanyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6698131D0919D6006EB0C2 /* TechCompanyDetailViewController.swift */; };
 		7D8A8CCC1D088C9A00786B85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8A8CCB1D088C9A00786B85 /* AppDelegate.swift */; };
 		7D8A8CCE1D088C9A00786B85 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8A8CCD1D088C9A00786B85 /* ViewController.swift */; };
 		7D8A8CD11D088C9A00786B85 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8A8CCF1D088C9A00786B85 /* Main.storyboard */; };
@@ -38,7 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7D46A2161D08CDDF00D8F486 /* TechCompanyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TechCompanyDetailViewController.swift; sourceTree = "<group>"; };
+		7D6698131D0919D6006EB0C2 /* TechCompanyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TechCompanyDetailViewController.swift; sourceTree = "<group>"; };
 		7D8A8CC81D088C9A00786B85 /* TechCompanies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TechCompanies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8A8CCB1D088C9A00786B85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D8A8CCD1D088C9A00786B85 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				7D8A8CFF1D0894F700786B85 /* TechCompaniesListViewController.swift */,
-				7D46A2161D08CDDF00D8F486 /* TechCompanyDetailViewController.swift */,
+				7D6698131D0919D6006EB0C2 /* TechCompanyDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -289,7 +289,7 @@
 				7D8A8CCC1D088C9A00786B85 /* AppDelegate.swift in Sources */,
 				7D8A8D001D0894F700786B85 /* TechCompaniesListViewController.swift in Sources */,
 				7D8A8CFB1D088D1000786B85 /* Entity.swift in Sources */,
-				7D46A2171D08CDDF00D8F486 /* TechCompanyDetailViewController.swift in Sources */,
+				7D6698141D0919D6006EB0C2 /* TechCompanyDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
