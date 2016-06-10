@@ -44,7 +44,7 @@ class TechCompaniesListViewController: UITableViewController {
 
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "toggle", style: .Plain, target: self, action: #selector(toggle))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Toggle", style: .Plain, target: self, action: #selector(toggle))
     }
 
     override func didReceiveMemoryWarning() {
@@ -133,7 +133,7 @@ class TechCompaniesListViewController: UITableViewController {
                             if indexPath.row == i {
                                 cell.textLabel?.text = e.name
                                 cell.imageView?.image = UIImage(named: e.imageName)
-                                if uniqueType[indexPath.section] == "School" {
+                                if e.name == "Holberton" {
                                     cell.detailTextLabel?.text = "I love studying"
                                 } else {
                                     cell.detailTextLabel?.text = "I love working"

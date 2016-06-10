@@ -32,10 +32,10 @@ class EntitiesHelper {
         return listOfTechCompany
     }
     static func getEntireList() -> [Entity]! {
-        for e in listOfTechCompany {
+        for e in listOfSchool {
             entireList.append(e)
         }
-        for e in listOfSchool {
+        for e in listOfTechCompany {
             entireList.append(e)
         }
         return entireList
