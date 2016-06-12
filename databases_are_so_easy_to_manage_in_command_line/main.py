@@ -71,7 +71,10 @@ def insert_item(argv):
             print str(Student.get(Student.age == argv[4] and
                                   Student.last_name == argv[5]))
     elif argv[2] == "exercise":
-        print "New Exercise: "
+        exercise = Exercise.create(student=argv[3],
+                                   subject=argv[4],
+                                   note=argv[5])
+        print "New Exercise: " + str(exercise)
 
 
 def create_item():
@@ -81,7 +84,7 @@ def create_item():
         table_arr.append(classes.get(k))
 
     BaseModel.database.connect()
-    BaseModel.database.create_tables(table_arr, safe=True)
+    BaseModel.database.create_tables(table_arr)
 
 
 def print_batch_by_school(argv):
@@ -226,7 +229,7 @@ def change_batch(argv):
 
 
 def print_all(argv):
-    '''Function description.
+    '''Print all data in database, ordered with tab heirarchy.
 
     Keyword arguments:
     argv -- An array of command line arguments passed to the program.
@@ -240,8 +243,50 @@ def print_all(argv):
                     if student.batch.id == batch.id:
                         print "\t\t" + str(student)
                         for exercise in Exercise.select():
-                            print "\t\t\t" + str(exercise)
-                            print "Exercise printed!"
+                            if exercise.student.id == student.id:
+                                print "\t\t\t" + str(exercise)
+
+
+def note_average_by_student(argv):
+    '''Print the average of a student's score in each field.
+
+    Keyword arguments:
+    argv -- An array of command line arguments passed to the program.
+    '''
+    # averages = {math_average: [0, 0, "Math: "]
+    #             english_average: [0, 0, "English: "]
+    #             history_average: [0, 0, "History: "]
+    #             c_prog_average: [0, 0, "C prog: "]
+    #             swift_prog_average: [0, 0, "Swift prog: "]}
+
+    math_average = [0, 0]
+    english_average = [0, 0]
+    history_average = [0, 0]
+    c_prog_average = [0, 0]
+    swift_prog_average = [0, 0]
+    for student in Student.select():
+        if str(student.id) == str(argv[2]):
+            for exercise in Exercise.select():
+                if str(exercise.student) == str(student):
+                    if exercise.subject == "Math":
+                        math_average[0] += exercise.note
+                        math_average[1] += 1
+                    elif exercise.subject == "English":
+                        english_average[0] += exercise.note
+                        english_average[1] += 1
+                    elif exercise.subject == "History":
+                        history_average[0] += exercise.note
+                        history_average[1] += 1
+                    elif exercise.subject == "C prog":
+                        c_prog_average[0] += exercise.note
+                        c_prog_average[1] += 1
+                    elif exercise.subject == "Swift prog":
+                        swift_prog_average[0] += exercise.note
+                        swift_prog_average[1] += 1
+
+            print "Math: " + str(math_average[0] / math_average[1])
+            print "English: " + str(english_average[0] / english_average[1])
+
 
 actions = {"create": create_item,
            "print": print_data,
@@ -253,7 +298,8 @@ actions = {"create": create_item,
            "print_family": print_family,
            "age_average": age_average,
            "change_batch": change_batch,
-           "print_all": print_all}
+           "print_all": print_all,
+           "note_average_by_student": note_average_by_student}
 
 
 def handle_action(argv):
@@ -263,32 +309,12 @@ def handle_action(argv):
     Keyword arguments:
     argv -- An array of command line arguments passed to the program.
     '''
-    for k in actions:
-        if argv[1] == k:
-            if k == "create":
-                create_item()
-            else:
+    if argv[1] == "create":
+        create_item()
+    else:
+        for k in actions:
+            if argv[1] == k:
                 actions.get(k)(argv)
-
-    # if argv[1] == "create":
-    #     create_item()
-    # elif argv[1] == "print":
-    #     if len(argv) > 2:
-    #         print_data(argv[2])
-    # elif argv[1] == "insert":
-    #     insert_item(argv)
-    # elif argv[1] == "delete":
-    #     delete_item(argv)
-    # elif argv[1] == "print_batch_by_school":
-    #     print_batch_by_school(argv)
-    # elif argv[1] == "print_student_by_batch":
-    #     print_student_by_batch(argv)
-    # elif argv[1] == "print_student_by_school":
-    #     print_student_by_school(argv)
-    # elif argv[1] == "print_family":
-    #     print_family(argv)
-    # elif argv[1] == "age_average":
-    #     age_average(argv)
 
 
 '''Interpret the command line. Handle the action, if possible.'''

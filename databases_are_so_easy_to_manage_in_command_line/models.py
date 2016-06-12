@@ -62,7 +62,7 @@ class Exercise(BaseModel):
     student = ForeignKeyField(Student, related_name='exercises',
                               on_delete='CASCADE')
     subject = CharField(128, default="", choices=SUBJECTS)
-    note = age = IntegerField(default=0)
+    note = IntegerField(default=0)
 
     def __str__(self):
-        return "Exercise: " + self.student + "has " + self.note + "in" + self.subject + " (" + str(self.id) + ") "
+        return "Exercise: " + str(self.student) + " has " + str(self.note) + " in " + self.subject + " (" + str(self.id) + ")"
