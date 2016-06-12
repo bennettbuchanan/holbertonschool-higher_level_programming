@@ -1,5 +1,6 @@
 import sys
 from peewee import *
+from decimal import *
 from models import BaseModel, School, Batch, User, Student, Exercise
 
 classes = {"school": School,
@@ -7,10 +8,15 @@ classes = {"school": School,
            "student": Student,
            "exercise": Exercise}
 
+mean = [{"subject": "Math", "pts_total": 0.0, "num": 0, "mean": 0.0},
+        {"subject": "English", "pts_total": 0.0, "num": 0, "mean": 0.0},
+        {"subject": "History", "pts_total": 0.0, "num": 0, "mean": 0.0},
+        {"subject": "C prog", "pts_total": 0.0, "num": 0, "mean": 0.0},
+        {"subject": "Swift prog", "pts_total": 0.0, "num": 0, "mean": 0.0}]
 
 def print_data(argv):
     '''Iterate through the classes with the corresponding classes and print the
-    item, when found.
+    item when found.
     '''
     if len(argv) > 2:
         for k in classes:
@@ -253,39 +259,58 @@ def note_average_by_student(argv):
     Keyword arguments:
     argv -- An array of command line arguments passed to the program.
     '''
-    # averages = {math_average: [0, 0, "Math: "]
-    #             english_average: [0, 0, "English: "]
-    #             history_average: [0, 0, "History: "]
-    #             c_prog_average: [0, 0, "C prog: "]
-    #             swift_prog_average: [0, 0, "Swift prog: "]}
-
-    math_average = [0, 0]
-    english_average = [0, 0]
-    history_average = [0, 0]
-    c_prog_average = [0, 0]
-    swift_prog_average = [0, 0]
     for student in Student.select():
         if str(student.id) == str(argv[2]):
             for exercise in Exercise.select():
                 if str(exercise.student) == str(student):
-                    if exercise.subject == "Math":
-                        math_average[0] += exercise.note
-                        math_average[1] += 1
-                    elif exercise.subject == "English":
-                        english_average[0] += exercise.note
-                        english_average[1] += 1
-                    elif exercise.subject == "History":
-                        history_average[0] += exercise.note
-                        history_average[1] += 1
-                    elif exercise.subject == "C prog":
-                        c_prog_average[0] += exercise.note
-                        c_prog_average[1] += 1
-                    elif exercise.subject == "Swift prog":
-                        swift_prog_average[0] += exercise.note
-                        swift_prog_average[1] += 1
+                    for i in range(0, len(mean)):
+                        if mean[i].get("subject") == exercise.subject:
+                            mean[i]["num"] += 1
+                            mean[i]["pts_total"] += exercise.note
+                    for i in range(0, len(mean)):
+                        if mean[i]["num"] > 0:
+                            mean[i]["mean"] = mean[i][
+                                "pts_total"] / mean[i]["num"]
+            for i in range(0, len(mean)):
+                if mean[i]["num"] > 0:
+                    '''Remove decimal place if an int.'''
+                    if mean[i]["mean"] % 1 == 0:
+                        print mean[i]["subject"] + ": " + str("%g" % mean[i]["mean"])
+                    else:
+                        print mean[i]["subject"] + ": " + str(round(mean[i]["mean"], 5))
+            return
+    print "Student not found"
 
-            print "Math: " + str(math_average[0] / math_average[1])
-            print "English: " + str(english_average[0] / english_average[1])
+
+def note_average_by_batch(argv):
+    '''Print the average of a batch's score in each field.
+
+    Keyword arguments:
+    argv -- An array of command line arguments passed to the program.
+    '''
+    for batch in Batch.select():
+        if str(batch.id) == str(argv[2]):
+            for student in Student.select():
+                if student.batch.id == batch.id:
+                    for exercise in Exercise.select():
+                        if exercise.student.id == student.id:
+                            for i in range(0, len(mean)):
+                                if mean[i].get("subject") == exercise.subject:
+                                    mean[i]["num"] += 1
+                                    mean[i]["pts_total"] += exercise.note
+                            for i in range(0, len(mean)):
+                                if mean[i]["num"] > 0:
+                                    mean[i]["mean"] = mean[i][
+                                        "pts_total"] / mean[i]["num"]
+            for i in range(0, len(mean)):
+                if mean[i]["num"] > 0:
+                    if mean[i]["mean"] % 1 == 0:
+                        print mean[i]["subject"] + ": " + str("%g" %
+                                                              mean[i]["mean"])
+                    else:
+                        print mean[i]["subject"] + ": " + str(round(mean[i]["mean"], 5))
+            return
+    print "Batch not found"
 
 
 actions = {"create": create_item,
@@ -299,7 +324,8 @@ actions = {"create": create_item,
            "age_average": age_average,
            "change_batch": change_batch,
            "print_all": print_all,
-           "note_average_by_student": note_average_by_student}
+           "note_average_by_student": note_average_by_student,
+           "note_average_by_batch": note_average_by_batch}
 
 
 def handle_action(argv):
