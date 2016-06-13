@@ -1,4 +1,5 @@
 import sys
+import json
 from peewee import *
 from decimal import *
 from models import BaseModel, School, Batch, User, Student, Exercise
@@ -126,13 +127,16 @@ def print_student_by_batch(argv):
         if str(item.school.id) == str(argv[2]):
             break
         i += 1
-    if i == len(Batch.select()):
-        print "School not found"
+    for batch in Batch.select():
+        if str(batch.id) == str(argv[2]):
+            return
+    print "School not found"
 
 
 def print_student_by_school(argv):
     '''Takes the system arguments as parameter and then prints the students
-    based on the student id. Prints 'School not found' if the id does not exist.
+    based on the student id. Prints 'School not found' if the id does not
+    exist.
 
     Keyword arguments:
     argv -- An array of command line arguments passed to the program.
@@ -409,6 +413,102 @@ def top_school(argv):
     print top["student"]
 
 
+def import_json(argv):
+    '''Import data from a JSON string. Must be a valid JSON string with the
+    respective data fields.
+
+    Keyword arguments:
+    argv -- An array of command line arguments.
+    '''
+    try:
+        loaded_json = json.loads(argv[2])
+    except ValueError, e:
+        print "Please set a JSON string"
+        return
+    try:
+        int(argv[2])
+        print "Please set a JSON string"
+        return
+    except ValueError, e:
+        batch_id = 0
+        student_id = 0
+        for k in loaded_json:
+            for batch in k["batches"]:
+                for student in batch["students"]:
+                    for exercise in student["exercises"]:
+                        insert_item(["", "insert", "school", k["name"]])
+                        for school in School.select():
+                            if school.name == k["name"]:
+                                school_id = school.id
+                        insert_item(["", "insert", "batch", school_id,
+                                     batch.get("name")])
+                        for orig_batch in Batch.select():
+                            if orig_batch.name == batch.get("name"):
+                                batch_id = orig_batch.id
+                        insert_item(["", "insert", "student", batch_id,
+                                     student.get("age"),
+                                     student.get("last_name"),
+                                     student.get("first_name")])
+                        for s in Student.select():
+                            if s.first_name == student.get("first_name"):
+                                student_id = s.id
+                        insert_item(["", "insert", "exercise", student_id,
+                                     exercise.get("subject"),
+                                     exercise.get("note")])
+
+
+def export_json(argv):
+    '''Export all data in JSON format.
+
+    Keyword arguments:
+    argv -- An array of command line arguments.
+    '''
+    data = []
+    for school in School.select():
+        dict = {"name": school.name}
+        data.append(dict)
+
+    '''Add the batches.'''
+    for dict in data:
+        batches = []
+        for batch in Batch.select():
+            if batch.school.name == dict["name"]:
+                batch_dict = {}
+                dict["batches"] = batches
+                batch_dict["name"] = batch.name
+                batches.append(batch_dict)
+
+    '''Add the students in their batch.'''
+    for dict in data:
+        if dict.get("batches") is not None:
+            for batch in dict.get("batches"):
+                students = []
+                for student in Student.select():
+                    if str(student.batch.name) == str(batch["name"]):
+                        student_dict = {}
+                        batch["students"] = students
+                        student_dict["first_name"] = student.first_name
+                        student_dict["last_name"] = student.last_name
+                        student_dict["age"] = student.age
+                        students.append(student_dict)
+
+    '''Add the exercises to the corresponding student.'''
+    for dict in data:
+        if dict.get("batches") is not None:
+            for batch in dict.get("batches"):
+                for student in batch["students"]:
+                    exercises = []
+                    for e in Exercise.select():
+                        if e.student.first_name == student.get("first_name"):
+                            exercsie_dict = {}
+                            student["exercises"] = exercises
+                            exercsie_dict["note"] = e.note
+                            exercsie_dict["subject"] = e.subject
+                            exercises.append(exercsie_dict)
+
+    print json.dumps(data)
+
+
 actions = {"create": create_item,
            "print": print_item,
            "insert": insert_item,
@@ -424,7 +524,9 @@ actions = {"create": create_item,
            "note_average_by_batch": note_average_by_batch,
            "note_average_by_school": note_average_by_school,
            "top_batch": top_batch,
-           "top_school": top_school}
+           "top_school": top_school,
+           "export_json": export_json,
+           "import_json": import_json}
 
 
 def handle_action(argv):
@@ -435,7 +537,10 @@ def handle_action(argv):
     argv -- An array of command line arguments passed to the program.
     '''
     if argv[1] == "create":
-        create_item()
+        if len(argv) == 3 and argv[2] == "test":
+            print "create"
+        else:
+            create_item()
     else:
         for k in actions:
             if argv[1] == k:
