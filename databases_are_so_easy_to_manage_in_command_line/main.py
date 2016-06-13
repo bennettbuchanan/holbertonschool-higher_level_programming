@@ -14,6 +14,7 @@ mean = [{"subject": "Math", "pts_total": 0.0, "num": 0, "mean": 0.0},
         {"subject": "C prog", "pts_total": 0.0, "num": 0, "mean": 0.0},
         {"subject": "Swift prog", "pts_total": 0.0, "num": 0, "mean": 0.0}]
 
+
 def print_item(argv):
     '''Iterate through the classes with the corresponding classes and print the
     item when found.
@@ -254,6 +255,12 @@ def print_all(argv):
 
 
 def get_average(exercise, argv):
+    '''Find the averages of the exercises given.
+
+    Keyword arguments:
+    argv -- An array of command line arguments.
+    exercise -- The exercise object in which to factor in the average.
+    '''
     for i in range(0, len(mean)):
         if mean[i].get("subject") == exercise.subject:
             mean[i]["num"] += 1
@@ -264,15 +271,66 @@ def get_average(exercise, argv):
                 "pts_total"] / mean[i]["num"]
 
 
-def print_averages(i):
-    if mean[i]["num"] > 0:
+def print_averages(item, print_items=True):
+    '''Print the averages based on a the mean dict or return the averages if
+    print_items is False.
+
+    Keyword arguments:
+    i -- An item of the mean dict.
+    print_items -- Boolean value to optionally print the values
+    '''
+    average_dict = {}
+    if mean[item]["num"] > 0:
         '''Remove decimal place if an int.'''
-        if mean[i]["mean"] % 1 == 0:
-            print mean[i]["subject"] + ":",
-            print str("%g" % mean[i]["mean"])
+        if mean[item]["mean"] % 1 == 0:
+            if print_items is True:
+                print mean[item]["subject"] + ":",
+                print str("%g" % mean[item]["mean"])
+            else:
+                average_dict["subject"] = mean[item]["subject"]
+                average_dict["average"] = ("%g" % mean[item]["mean"])
+                return average_dict
         else:
-            print mean[i]["subject"] + ":",
-            print str(round(mean[i]["mean"], 5))
+            if print_items is True:
+                print mean[item]["subject"] + ":",
+                print str(round(mean[item]["mean"], 5))
+            else:
+                average_dict["subject"] = mean[item]["subject"]
+                average_dict["average"] = round(mean[item]["mean"], 5)
+                return average_dict
+
+
+def handle_average(argv, Class, class_str, call_print_averages=True):
+    '''Pass the appropriate data to get the corresponding averages.
+
+    Keyword arguments:
+    argv -- An array of command line arguments.
+    Class -- The class in which to find the averages.
+    class_str -- The stringified Classname (e.g., a Student class would be
+    "Student").
+    call_print_averages -- Boolean value to optionally print the averages
+    '''
+    arr = []
+    for i in mean:
+        i["pts_total"] = 0.0
+        i["mean"] = 0.0
+        i["num"] = 0
+    for exercise in Exercise.select():
+        compare = {"Student": exercise.student.id,
+                   "Batch": exercise.student.batch.id,
+                   "School": exercise.student.batch.school.id}
+        if str(compare.get(class_str)) == str(argv[2]):
+            get_average(exercise, argv)
+    for i in range(0, len(mean)):
+        if call_print_averages is True:
+            print_averages(i)
+        else:
+            if print_averages(i, False) is not None:
+                arr.append(print_averages(i, False))
+    for student in Class.select():
+        if str(student.id) == str(argv[2]):
+            return arr
+    print class_str + " not found"
 
 
 def note_average_by_student(argv):
@@ -281,15 +339,7 @@ def note_average_by_student(argv):
     Keyword arguments:
     argv -- An array of command line arguments passed to the program.
     '''
-    for exercise in Exercise.select():
-        if str(exercise.student.id) == str(argv[2]):
-            get_average(exercise, argv)
-    for i in range(0, len(mean)):
-            print_averages(i)
-    for student in Student.select():
-        if str(student.id) == str(argv[2]):
-            return
-    print "Student not found"
+    handle_average(argv, Student, "Student")
 
 
 def note_average_by_batch(argv):
@@ -298,15 +348,7 @@ def note_average_by_batch(argv):
     Keyword arguments:
     argv -- An array of command line arguments passed to the program.
     '''
-    for exercise in Exercise.select():
-        if str(exercise.student.batch.id) == str(argv[2]):
-            get_average(exercise, argv)
-    for i in range(0, len(mean)):
-            print_averages(i)
-    for batch in Batch.select():
-        if str(batch.id) == str(argv[2]):
-            return
-    print "Batch not found"
+    handle_average(argv, Batch, "Batch")
 
 
 def note_average_by_school(argv):
@@ -315,15 +357,7 @@ def note_average_by_school(argv):
     Keyword arguments:
     argv -- An array of command line arguments passed to the program.
     '''
-    for exercise in Exercise.select():
-        if str(exercise.student.batch.school.id) == str(argv[2]):
-            get_average(exercise, argv)
-    for i in range(0, len(mean)):
-            print_averages(i)
-    for school in School.select():
-        if str(school.id) == str(argv[2]):
-            return
-    print "School not found"
+    handle_average(argv, School, "School")
 
 
 def top_batch(argv):
@@ -332,40 +366,47 @@ def top_batch(argv):
     Keyword arguments:
     argv -- An array of command line arguments passed to the program.
     '''
-    top_student = {"top_score": 0.0, "student": Student}
-
-    for exercise in Exercise.select():
-        if str(exercise.student.batch.id) == str(argv[2]):
-            for i in range(0, len(mean)):
-                if mean[i].get("subject") == exercise.subject:
-                    mean[i]["num"] += 1
-                    mean[i]["pts_total"] += exercise.note
-            for i in range(0, len(mean)):
-                if mean[i]["num"] > 0:
-                    mean[i]["mean"] = mean[i][
-                        "pts_total"] / mean[i]["num"]
-    for i in range(0, len(mean)):
-        if mean[i]["num"] > 0:
-            '''Remove decimal place if an int.'''
-            if mean[i]["mean"] % 1 == 0:
-                print mean[i]["subject"] + ":",
-                print str("%g" % mean[i]["mean"])
-            else:
-                print mean[i]["subject"] + ":",
-                print str(round(mean[i]["mean"], 5))
-
-        #
-        # if mean[i]["mean"] > top_student["top_score"]:
-        #     top_student["top_score"] = mean[i]["mean"]
-        #     top_student["student"] = student
-
-
-
+    top = {"score": 0.0, "student": Student}
 
     for student in Student.select():
-        if str(student.id) == str(argv[2]):
-            return
-    print "Student not found"
+        if str(student.batch.id) == str(argv[2]):
+            arr = handle_average(["", "", student.id], Student,
+                                 "Student", False)
+            for dict in arr:
+                dict["student"] = student
+            if len(argv) > 3:
+                for i in arr:
+                    if i["subject"] == argv[3]:
+                        if i["average"] > top["score"]:
+                            top["score"] = i["average"]
+                            top["student"] = i["student"]
+            else:
+                for i in arr:
+                    if i["average"] > top["score"]:
+                        top["score"] = i["average"]
+                        top["student"] = i["student"]
+    print top["student"]
+
+
+def top_school(argv):
+    '''Print the student object that is the top of a given school.
+
+    Keyword arguments:
+    argv -- An array of command line arguments passed to the program.
+    '''
+    top = {"score": 0.0, "student": Student}
+
+    for student in Student.select():
+        if str(student.batch.school.id) == str(argv[2]):
+            arr = handle_average(["", "", student.id], Student,
+                                 "Student", False)
+            for dict in arr:
+                dict["student"] = student
+            for i in arr:
+                if i["average"] > top["score"]:
+                    top["score"] = i["average"]
+                    top["student"] = i["student"]
+    print top["student"]
 
 
 actions = {"create": create_item,
@@ -382,7 +423,8 @@ actions = {"create": create_item,
            "note_average_by_student": note_average_by_student,
            "note_average_by_batch": note_average_by_batch,
            "note_average_by_school": note_average_by_school,
-           "top_batch": top_batch}
+           "top_batch": top_batch,
+           "top_school": top_school}
 
 
 def handle_action(argv):
