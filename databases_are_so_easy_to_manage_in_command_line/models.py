@@ -49,8 +49,9 @@ class Student(User):
         '''Add a space in front of first_name if it exists to return a properly
         spaced string.
         '''
-
-        return "Student: " + self.first_name + " " + self.last_name + " (" + str(self.id) + ") " + "part of the batch: " + str(self.batch)
+        if self.first_name != "":
+            self.first_name = " " + self.first_name
+        return "Student:" + self.first_name + " " + self.last_name + " (" + str(self.id) + ") " + "part of the batch: " + str(self.batch)
 
 
 class Exercise(BaseModel):
