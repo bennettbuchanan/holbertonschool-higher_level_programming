@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="clock" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleAspectFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="berry_bear" highlightedImage="berry_bear" translatesAutoresizingMaskIntoConstraints="NO" id="Eam-YK-pWi">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWV-Ko-qwo">
+                                <rect key="frame" x="178" y="277" width="243" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="243" id="7NL-2R-KbK"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="UW3-Q5-XjI"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="243" id="ZUd-St-sWT"/>
+                                    <constraint firstAttribute="height" constant="45" id="nG4-JU-XUy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5f6-hA-vDw">
+                                <rect key="frame" x="178" y="219" width="243" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="ZT0-Fj-rCY"/>
+                                    <constraint firstAttribute="width" constant="243" id="zM4-Qv-gFg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Eam-YK-pWi" secondAttribute="trailing" constant="-20" id="HYg-jJ-NFN"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Eam-YK-pWi" secondAttribute="bottom" id="UQI-CD-42n"/>
+                            <constraint firstItem="tWV-Ko-qwo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="WM2-FD-OzG"/>
+                            <constraint firstItem="Eam-YK-pWi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Zca-Ch-KjC"/>
+                            <constraint firstItem="Eam-YK-pWi" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="fyw-ww-LJF"/>
+                            <constraint firstItem="Eam-YK-pWi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="ha6-By-S5u"/>
+                            <constraint firstItem="tWV-Ko-qwo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rZo-8O-AzQ"/>
+                            <constraint firstItem="tWV-Ko-qwo" firstAttribute="top" secondItem="5f6-hA-vDw" secondAttribute="bottom" constant="13" id="wKZ-S4-0Hy"/>
+                            <constraint firstItem="Eam-YK-pWi" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="yRC-Cz-gJJ"/>
+                            <constraint firstItem="5f6-hA-vDw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zzp-TA-OfE"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="clock_label" destination="tWV-Ko-qwo" id="WcD-gc-o2v"/>
+                        <outlet property="pie_message" destination="5f6-hA-vDw" id="j1d-7V-PqT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="281" y="453"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="berry_bear" width="2560" height="1600"/>
+    </resources>
+</document>
