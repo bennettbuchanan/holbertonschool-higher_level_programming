@@ -130,7 +130,7 @@ $(document).ready(function(){
                 buttonEpisodes.setAttribute('class', 'details-episodes btn btn-default btn-xs');
                 buttonEpisodes.setAttribute('data-season-id', obj[i].id);
                 buttonEpisodes.setAttribute('data-movie-id', row_data);
-                buttonEpisodes.innerHTML = 'details';
+                buttonEpisodes.innerHTML = 'episodes';
 
                 row = table.insertRow(i);
                 var cell = row.insertCell(0);
