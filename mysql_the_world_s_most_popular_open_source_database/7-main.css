@@ -1,0 +1,51 @@
+div {
+  padding-left: 20px;
+}
+
+.table {
+  display: flex;
+  flex-direction: row;
+}
+
+table {
+  width: 200px;
+}
+
+#details_table {
+  padding-left: 20px;
+}
+
+img {
+  max-height: 100px;
+}
+
+.show-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.details-episodes {
+  margin-left: 10px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.overview {
+  max-width: 25%;
+  min-width: 25%;
+}
+
+.visually-hidden {
+  display: none;
+}
+
+.btn {
+  max-height: 30px;
+}
+
+.title {
+  padding: 0px 20px 0px 20px;
+}

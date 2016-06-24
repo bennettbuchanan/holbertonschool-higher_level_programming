@@ -6,6 +6,7 @@ import json
 HOST_NAME = 'localhost'
 PORT_NUMBER = 9898
 
+
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_HEAD(s):
         s.send_response(200)
