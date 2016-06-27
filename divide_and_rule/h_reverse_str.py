@@ -1,13 +1,12 @@
 import threading
 
 
-class StrLengthThread(threading.Thread):
+class ReverseStrThread(threading.Thread):
     '''Starts a thread and adds the class' attribute total_str_length.
 
     Keyword arguments:
     word -- A string, the length of which will be added to total_str_length.
     '''
-
     def __init__(self, word):
         threading.Thread.__init__(self)
         if type(word) is not str:
@@ -15,8 +14,8 @@ class StrLengthThread(threading.Thread):
         else:
             self.__word = word
 
-    total_str_length = None
+    sentence = ""
 
     def run(self):
         '''Set the run() method for this thread's activity.'''
-        StrLengthThread.total_str_length += len(self.__word)
+        ReverseStrThread.sentence += self.__word[::-1] + " "
