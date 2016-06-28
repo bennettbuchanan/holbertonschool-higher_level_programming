@@ -3,8 +3,14 @@ import threading
 
 class SumThread(threading.Thread):
     def __init__(self, numbers):
+        '''Creates a new thread and adds the numbers passed as an array to the
+        this class' variable `sum`.
+
+        Keyword arguments:
+        numbers -- An array of numbers to be added to sum.
+        '''
         threading.Thread.__init__(self)
-        if all(isinstance(i, int) for i in numbers) is False or len(numbers) is 0:
+        if all(isinstance(i, int) for i in numbers) is False:
             raise Exception("numbers is not an array of integers")
         else:
             self.__numbers = numbers
@@ -17,13 +23,20 @@ class SumThread(threading.Thread):
         arr_sum = 0
         for n in self.__numbers:
             arr_sum += n
-
         SumThread.sum += arr_sum
 
 
 class Sum(object):
     def __init__(self, nb_threads, numbers):
-        if all(isinstance(i, int) for i in numbers) is False or len(numbers) is 0:
+        '''Creates a new thread instance, passing it the array numbers divided
+        into equal parts nb_threads.
+
+        Keyword arguments:
+        numbers -- An array of numbers to be added.
+        nb_threads -- The number of times the array should be divided up and
+        a new thread created accordingly to be sum
+        '''
+        if all(isinstance(i, int) for i in numbers) is False:
             raise Exception("numbers is not an array of integers")
         else:
             self.__numbers = numbers
@@ -35,17 +48,23 @@ class Sum(object):
 
         SumThread.sum = 0
         self.__threads = []
+        self.__chunk = []
+        indivisible = False
 
-        i = 0
-        for n in xrange(0, len(self.__numbers), self.__nb_threads):
-            if i == 0:
-                thread = SumThread(self.__numbers[0:self.__nb_threads])
+        if len(self.__numbers) % self.__nb_threads:
+            indivisible = True
+
+        slice = len(self.__numbers) / self.__nb_threads
+        j = 0
+        for i in range(0, self.__nb_threads):
+            if i + 1 == self.__nb_threads and indivisible is True:
+                self.__chunk = self.__numbers[j:]
             else:
-                thread = SumThread(self.__numbers[i * self.__nb_threads:(i * self.__nb_threads) + self.__nb_threads])
+                self.__chunk = self.__numbers[j:j + slice]
+            j += slice
+            thread = SumThread(self.__chunk)
             self.__threads += [thread]
             thread.start()
-            i += 1
-
 
     def isComputing(self):
         '''Returns True if any threads are not finished, otherwise returns
