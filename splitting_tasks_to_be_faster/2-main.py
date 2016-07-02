@@ -14,6 +14,5 @@ def emulate_people(idx):
 
 for idx_people in range(0, 15):
     thread.start_new_thread( emulate_people, (idx_people, ) )
-
 while True:
     pass
