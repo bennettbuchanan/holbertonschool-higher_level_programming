@@ -59,6 +59,21 @@ class SWAPI(object):
 
         return
 
+    def stop(self):
+        '''Set the threading.Event() to true for each thread to stop the
+        process.
+        '''
+        for thread in FilmThread.thread_list:
+            thread.stop()
+
+        for thread in CharactersThread.thread_list:
+            thread.stop()
+
+        for thread in PlanetThread.thread_list:
+            thread.stop()
+
+        BaseModel.database.close()
+
     def is_done(self):
         '''Method to determine when all threads are complete. Returns False if
         a thread is still in in process, and True otherwise.'''
@@ -86,9 +101,16 @@ class FilmThread(threading.Thread):
         '''
         threading.Thread.__init__(self)
         self.__url = url
+        self.__stop = threading.Event()
 
     thread_list = []
     ordered_arr = []
+
+    def stop(self):
+        '''Set the threading.Event() to true for each thread to stop the
+        process.
+        '''
+        self.__stop.set()
 
     def run(self):
         '''Defines the threads activity. Makes a row in the FilmModel table
@@ -120,9 +142,16 @@ class CharactersThread(threading.Thread):
         '''
         threading.Thread.__init__(self)
         self.__url = url
+        self.__stop = threading.Event()
 
     id_list = []
     thread_list = []
+
+    def stop(self):
+        '''Set the threading.Event() to true for each thread to stop the
+        process.
+        '''
+        self.__stop.set()
 
     def run(self):
         '''Defines the threads activity. Makes a row in the PeopleModel table
@@ -152,9 +181,16 @@ class PlanetThread(threading.Thread):
         '''
         threading.Thread.__init__(self)
         self.__url = url
+        self.__stop = threading.Event()
 
     id_list = []
     thread_list = []
+
+    def stop(self):
+        '''Set the threading.Event() to true for each thread to stop the
+        process.
+        '''
+        self.__stop.set()
 
     def run(self):
         '''Defines the threads activity. Makes a row in the PlanetModel table
